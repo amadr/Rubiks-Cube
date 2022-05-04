@@ -56,6 +56,7 @@ public class Vector3D {
 		vector[0] += other[0];
 		vector[1] += other[1];
 		vector[2] += other[2];
+		System.out.print("Hello"); //##########
 		return vector;
 	}
 	public void copyVector(double[] other) {
