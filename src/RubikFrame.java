@@ -9,10 +9,6 @@ import javax.swing.JPanel;
  * 
  */
 
-/**
- * @author amad
- *
- */
 public class RubikFrame extends JFrame {
 	private RubiksCube mRubikCube;
 	private RubikComp mRubikComp;

@@ -39,8 +39,8 @@ public class RotMatrix {
 		int row = mRotMatrix.length - 1, col = mRotMatrix[0].length - 1;
 		int rotLength = rot.length - 1;
 
-		for (int i = row - 1; i >= 0; i--) {
-			for (int j = col - 1; j >= 0; j--) {
+		for (int i = row; i >= 0; i--) {
+			for (int j = col; j >= 0; j--) {
 				if(rotLength >= 0) {
 					mRotMatrix[i][j] = rot[rotLength--];
 				}

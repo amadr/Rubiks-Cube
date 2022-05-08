@@ -4,10 +4,6 @@ import java.awt.Graphics2D;
  * 
  */
 
-/**
- * @author amad
- *
- */
 public class Perspective {
 	private double mXoffset, mYoffset, mScale;
 	

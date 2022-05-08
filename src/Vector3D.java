@@ -2,24 +2,19 @@
  * 
  */
 
-/**
- * @author amad
- *
- */
 public class Vector3D {
 	/*
 	 * Member vector containing the x, y and z coordinates.
 	 */
 	private double[] mVector = new double[3];
 
-	public Vector3D() {
-	};
+	public Vector3D() {}
 
 	public Vector3D(double x, double y, double z) {
 		mVector[0] = x;
 		mVector[1] = y;
 		mVector[2] = z;
-	};
+	}
 
 	public double getX() {
 		return mVector[0];
