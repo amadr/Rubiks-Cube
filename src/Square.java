@@ -10,7 +10,7 @@ public class Square {
 
 	private Vector3D[] mEdges = new Vector3D[4];
 
-	private Vector3D mNormalVec;
+	private Vector3D mNormalVector;
 
 	private Color mColor;
 
@@ -19,7 +19,7 @@ public class Square {
 		this.mEdges[1] = ur;
 		this.mEdges[2] = ll;
 		this.mEdges[3] = lr;
-		this.mNormalVec = nv;
+		this.mNormalVector = nv;				
 	}
 
 	public void setEdges(Vector3D[] e) {
@@ -28,9 +28,13 @@ public class Square {
 		this.mEdges[2] = e[2];
 		this.mEdges[3] = e[3];
 	}
+	
+	public Vector3D[] getEdges() {
+		return mEdges;
+	}
 
 	public void setNomalVec(Vector3D nv) {
-		mNormalVec.copyVector(new double[] {2, 3, 4});
+		this.mNormalVector = nv ; 
 	}
 
 	public void setColor(Color c) {
@@ -46,7 +50,7 @@ public class Square {
 		this.mEdges[1] = other.mEdges[1];
 		this.mEdges[2] = other.mEdges[2];
 		this.mEdges[3] = other.mEdges[3];
-		this.mNormalVec = other.mNormalVec;
+		this.mNormalVector = other.mNormalVector;
 		this.mColor = other.mColor;
 	}
 }

@@ -72,23 +72,26 @@ public class RotMatrix {
 	}
 
 	public static RotMatrix xRotMatrix(double phi) {
-		double[] xRot = {1, 0,	0, 
+		final double[] xRot = {1, 0, 0, 
 						 0, Math.cos(phi), -Math.sin(phi), 
 						 0, Math.sin(phi), Math.cos(phi)};
-		return new RotMatrix(xRot);
+		final RotMatrix xRotMatrix = new RotMatrix(xRot);
+		return xRotMatrix;
 	}
 	
 	public static RotMatrix yRotMatrix(double phi) {
-		double[] yRot = {Math.cos(phi), 0,	Math.sin(phi), 
+		final double[] yRot = {Math.cos(phi), 0, Math.sin(phi), 
 						 0, 1, 0,
 						 -Math.sin(phi), 0, Math.cos(phi)};
-		return new RotMatrix(yRot);
+		final RotMatrix yRotMatrix = new RotMatrix(yRot);
+		return yRotMatrix;
 	}
 	
 	public static RotMatrix zRotMatrix(double phi) {
-		double[] zRot = {Math.cos(phi), -Math.sin(phi),	0, 
+		final double[] zRot = {Math.cos(phi), -Math.sin(phi), 0, 
 						 Math.sin(phi), Math.cos(phi), 0, 
 						 0, 0, 1};
-		return new RotMatrix(zRot);
+		final RotMatrix zRotMatrix = new RotMatrix(zRot);
+		return zRotMatrix;
 	}
 }
