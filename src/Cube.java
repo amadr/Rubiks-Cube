@@ -17,21 +17,114 @@ public class Cube implements Comparable<Cube> {
 	
 	public  Vector3D [][] normalVectors  = new Vector3D [3][2];
 
-	public Cube (Vector3D toMid,Vector3D vx,Vector3D vy, Vector3D vz)		 // Nicht sicher, ob Daten übergeben werden sollen 
+	
+	public Cube ()		 // Nicht sicher, ob Daten übergeben werden sollen 
+	{	
+		
+	}
+	
+	public Cube (Vector3D toMid)		 // Nicht sicher, ob Daten übergeben werden sollen 
 	{	
 		this.toMid = toMid; // Vector mit Ausrichtung auf Mittelpunkt (0,0,0)
-		vx.normalizeVector();
-		vy.normalizeVector();	// TODO
-		vz.normalizeVector();
-		this.mUnitVectors[0]= vx;
-		this.mUnitVectors[1]= vy;
-		this.mUnitVectors[2]= vz;
-		this.edgeLength = 10;	// TODO muss angepasst werden 	
+//		vx.normalizeVector();
+//		vy.normalizeVector();	// TODO	Vector3D toMid,Vector3D vx,Vector3D vy, Vector3D vz
+//		vz.normalizeVector();
+//		this.mUnitVectors[0]= vx;
+//		this.mUnitVectors[1]= vy;
+//		this.mUnitVectors[2]= vz;
+//		this.edgeLength = 10;	// TODO muss angepasst werden 	
 		
 		this.mUnitVectors[0] = new Vector3D(1,0,0);	// Einheitsvectoren 
 		this.mUnitVectors[1] = new Vector3D(0,1,0);
 		this.mUnitVectors[2] = new Vector3D(0,0,1);
+		
+		
+	 // ###########  Ecken berechnen #####################
 
+		Vector3D halfUnit0 = this.mUnitVectors[0].getScaledVector(0.5);
+		Vector3D halfUnit1 = this.mUnitVectors[0].getScaledVector(0.5);
+		Vector3D halfUnit2 = this.mUnitVectors[0].getScaledVector(0.5);		
+		
+		Vector3D ulf= toMid;												// claculate upper left corner
+		ulf.subtractVector(halfUnit0.getScaledVector(0.5*this.edgeLength));
+		ulf.addVector(halfUnit1.getScaledVector(0.5*this.edgeLength));	
+		ulf.addVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
+		this.edges[0][0][0] = ulf; 
+		
+		Vector3D urf= toMid;												// claculate upper right corner
+		urf.addVector(halfUnit0.getScaledVector(0.5*this.edgeLength));
+		urf.addVector(halfUnit1.getScaledVector(0.5*this.edgeLength));
+		ulf.addVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
+		this.edges[1][0][0] = urf; 
+		
+		
+		Vector3D llf= toMid;												// claculate lower left corner
+		llf.subtractVector(halfUnit0.getScaledVector(0.5*this.edgeLength));
+		llf.subtractVector(halfUnit1.getScaledVector(0.5*this.edgeLength));
+		llf.subtractVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
+		this.edges[0][1][0] = llf; 
+		
+		Vector3D lrf= toMid;												// claculate upper right corner
+		lrf.addVector(halfUnit0.getScaledVector(0.5*this.edgeLength));
+		lrf.subtractVector(halfUnit1.getScaledVector(0.5*this.edgeLength));
+		llf.subtractVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
+		this.edges[1][1][0] = lrf; 
+		
+		//###### backside
+		Vector3D ulb = ulf;													// calculate the backside
+		ulb.addVector(halfUnit2.getScaledVector(this.edgeLength));
+		this.edges[0][0][1] = ulb; 
+		
+		Vector3D urb = urf;
+		urb.addVector(halfUnit2.getScaledVector(this.edgeLength));
+		this.edges[1][0][1] = urb; 
+		
+		Vector3D llb = llf;
+		llb.addVector(halfUnit2.getScaledVector(this.edgeLength));
+		this.edges[0][1][1] = llb; 
+		
+		Vector3D lrb = lrf;
+		lrb.addVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
+		this.edges[1][1][1] = lrb; 
+		
+		
+		// ############### normalen erstellen ##########
+		
+		
+		this.normalVectors[0][0] = mUnitVectors[0];			//positive x Richtung
+		this.normalVectors[1][0] = mUnitVectors[1];			//positive Y Richtung
+		this.normalVectors[2][0] = mUnitVectors[2];			//positive Z Richtung
+		
+
+		this.normalVectors[0][1] = mUnitVectors[0].getScaledVector(-1);
+		this.normalVectors[1][1] = mUnitVectors[1].getScaledVector(-1);
+		this.normalVectors[2][1] = mUnitVectors[2].getScaledVector(-1);
+		
+		
+		// ############### Areas erstellen ##########
+		
+	
+		Square front = new Square(this.edges[0][0][0],this.edges[1][0][0],this.edges[0][1][0],this.edges[1][1][0],this.normalVectors[2][0]);
+		this.area[2][0]= front ;
+		
+		Square back = new Square(this.edges[0][0][1],this.edges[1][0][1],this.edges[0][1][1],this.edges[1][1][1],this.normalVectors[2][1]);
+		this.area[2][1]= back ;
+		
+		Square left = new Square(this.edges[0][0][0],this.edges[0][0][1],this.edges[0][1][0],this.edges[0][1][1],this.normalVectors[0][1]);
+		this.area[0][1]= left ;
+		
+
+		Square right = new Square(this.edges[1][0][0],this.edges[1][0][1],this.edges[1][1][0],this.edges[1][1][1],this.normalVectors[0][0]);
+		this.area[0][0]= right ;
+		
+
+		Square top = new Square(this.edges[0][0][0],this.edges[1][0][0],this.edges[0][0][0],this.edges[1][0][1],this.normalVectors[1][0]);
+		this.area[1][0]= top ;
+		
+
+		Square bot = new Square(this.edges[0][1][0],this.edges[1][1][0],this.edges[0][1][0],this.edges[1][1][1],this.normalVectors[1][1]);
+		this.area[1][1]= bot ;
+	
 	}
 	
 	public void setAllColors (Color c) {
@@ -59,47 +152,6 @@ public class Cube implements Comparable<Cube> {
 	
 	public Vector3D [][][] getEdges(){											//TODO erstellung evt. in Konstruktor
 		
-		Vector3D halfUnit0 = this.mUnitVectors[0].getScaledVector(0.5);
-		Vector3D halfUnit1 = this.mUnitVectors[0].getScaledVector(0.5);
-		Vector3D halfUnit2 = this.mUnitVectors[0].getScaledVector(0.5);		
-		
-		Vector3D ulf= toMid;												// claculate upper left corner
-		ulf.subtractVector(halfUnit0.getScaledVector(0.5*this.edgeLength));
-		ulf.addVector(halfUnit1.getScaledVector(0.5*this.edgeLength));
-		this.edges[0][0][0] = ulf; 
-		
-		Vector3D urf= toMid;												// claculate upper right corner
-		urf.addVector(halfUnit0.getScaledVector(0.5*this.edgeLength));
-		urf.addVector(halfUnit1.getScaledVector(0.5*this.edgeLength));
-		this.edges[1][0][0] = urf; 
-		
-		
-		Vector3D llf= toMid;												// claculate lower left corner
-		ulf.subtractVector(halfUnit0.getScaledVector(0.5*this.edgeLength));
-		ulf.subtractVector(halfUnit1.getScaledVector(0.5*this.edgeLength));
-		this.edges[0][1][0] = llf; 
-		
-		Vector3D lrf= toMid;												// claculate upper right corner
-		urf.addVector(halfUnit0.getScaledVector(0.5*this.edgeLength));
-		urf.subtractVector(halfUnit1.getScaledVector(0.5*this.edgeLength));
-		this.edges[1][1][0] = lrf; 
-		
-		//###### backside
-		Vector3D ulb = ulf;													// calculate the backside
-		ulb.addVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
-		this.edges[0][0][1] = ulb; 
-		
-		Vector3D urb = urf;
-		urb.addVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
-		this.edges[1][0][1] = urb; 
-		
-		Vector3D llb = llf;
-		llb.addVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
-		this.edges[0][1][1] = llb; 
-		
-		Vector3D lrb = lrf;
-		lrb.addVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
-		this.edges[1][1][1] = lrb; 
 		
 		return this.edges;
 		
@@ -107,10 +159,15 @@ public class Cube implements Comparable<Cube> {
 	}
 	
 	public Square [][]getArea(){
+	
+		
 		return this.area;
 	}
 	
 	public Vector3D [][]getNormalVectors(){
+		
+		
+		
 		return this.normalVectors;
 	}
 	
@@ -123,6 +180,7 @@ public class Cube implements Comparable<Cube> {
 	}
 	
 	public void calculateNomalVector(){ // TODO Quelle https://www.demo2s.com/java/java-vector-get-the-normal-vector-of-3-points-that-lie-on-a-plane.html
+		
 //	double [] u = {unitVectors[1].getX() - unitVectors[0].getX(), unitVectors[1].getY() - unitVectors[0].getY(), unitVectors[1].getZ() - unitVectors[0].getZ()} ;				
 //	double [] v = {unitVectors[2].getX() - unitVectors[0].getX(), unitVectors[2].getY() - unitVectors[0].getY(), unitVectors[2].getZ() - unitVectors[0].getZ()} ;
 
