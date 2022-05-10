@@ -9,7 +9,7 @@ public class Cube implements Comparable<Cube> {
 	
 	private Vector3D toMid;
 	
-	public Vector3D[] unitVectors   = new Vector3D[3];
+	public Vector3D[] mUnitVectors   = new Vector3D[3];
 	
 	public  Vector3D [][][] edges = new Vector3D [2][2][2];
 	
@@ -23,14 +23,14 @@ public class Cube implements Comparable<Cube> {
 		vx.normalizeVector();
 		vy.normalizeVector();	// TODO
 		vz.normalizeVector();
-		this.unitVectors[0]= vx;
-		this.unitVectors[1]= vy;
-		this.unitVectors[2]= vz;
+		this.mUnitVectors[0]= vx;
+		this.mUnitVectors[1]= vy;
+		this.mUnitVectors[2]= vz;
 		this.edgeLength = 10;	// TODO muss angepasst werden 	
 		
-//		this.unitVectors[0] = new Vector3D(1,0,0);	// Einheitsvectoren 
-//		this.unitVectors[1] = new Vector3D(0,1,0);
-//		this.unitVectors[2] = new Vector3D(0,0,1);
+		this.mUnitVectors[0] = new Vector3D(1,0,0);	// Einheitsvectoren 
+		this.mUnitVectors[1] = new Vector3D(0,1,0);
+		this.mUnitVectors[2] = new Vector3D(0,0,1);
 
 	}
 	
@@ -57,8 +57,53 @@ public class Cube implements Comparable<Cube> {
 		return this.toMid;
 	}
 	
-	public Vector3D [][][] getEdges(){
+	public Vector3D [][][] getEdges(){											//TODO erstellung evt. in Konstruktor
+		
+		Vector3D halfUnit0 = this.mUnitVectors[0].getScaledVector(0.5);
+		Vector3D halfUnit1 = this.mUnitVectors[0].getScaledVector(0.5);
+		Vector3D halfUnit2 = this.mUnitVectors[0].getScaledVector(0.5);		
+		
+		Vector3D ulf= toMid;												// claculate upper left corner
+		ulf.subtractVector(halfUnit0.getScaledVector(0.5*this.edgeLength));
+		ulf.addVector(halfUnit1.getScaledVector(0.5*this.edgeLength));
+		this.edges[0][0][0] = ulf; 
+		
+		Vector3D urf= toMid;												// claculate upper right corner
+		urf.addVector(halfUnit0.getScaledVector(0.5*this.edgeLength));
+		urf.addVector(halfUnit1.getScaledVector(0.5*this.edgeLength));
+		this.edges[1][0][0] = urf; 
+		
+		
+		Vector3D llf= toMid;												// claculate lower left corner
+		ulf.subtractVector(halfUnit0.getScaledVector(0.5*this.edgeLength));
+		ulf.subtractVector(halfUnit1.getScaledVector(0.5*this.edgeLength));
+		this.edges[0][1][0] = llf; 
+		
+		Vector3D lrf= toMid;												// claculate upper right corner
+		urf.addVector(halfUnit0.getScaledVector(0.5*this.edgeLength));
+		urf.subtractVector(halfUnit1.getScaledVector(0.5*this.edgeLength));
+		this.edges[1][1][0] = lrf; 
+		
+		//###### backside
+		Vector3D ulb = ulf;													// calculate the backside
+		ulb.addVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
+		this.edges[0][0][1] = ulb; 
+		
+		Vector3D urb = urf;
+		urb.addVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
+		this.edges[1][0][1] = urb; 
+		
+		Vector3D llb = llf;
+		llb.addVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
+		this.edges[0][1][1] = llb; 
+		
+		Vector3D lrb = lrf;
+		lrb.addVector(halfUnit2.getScaledVector(0.5*this.edgeLength));
+		this.edges[1][1][1] = lrb; 
+		
 		return this.edges;
+		
+			
 	}
 	
 	public Square [][]getArea(){
@@ -71,9 +116,9 @@ public class Cube implements Comparable<Cube> {
 	
 	public void copyCube(Cube other) {
 		this.toMid = other.toMid;
-		this.unitVectors[0] = other.unitVectors[0];		
-		this.unitVectors[1] = other.unitVectors[1];
-		this.unitVectors[2] = other.unitVectors[2];	
+		this.mUnitVectors[0] = other.mUnitVectors[0];		
+		this.mUnitVectors[1] = other.mUnitVectors[1];
+		this.mUnitVectors[2] = other.mUnitVectors[2];	
 		this.edgeLength = other.edgeLength;	
 	}
 	
@@ -85,11 +130,20 @@ public class Cube implements Comparable<Cube> {
 //    crossProduct[1] = u[2] * v[0] - u[0] * v[2];
 //    crossProduct[2] = u[0] * v[1] - u[1] * v[0];
 		
-		normalVectors[0][0] = unitVectors[0];
-		normalVectors[1][0] = unitVectors[1];
-		normalVectors[2][0] = unitVectors[2];
+		normalVectors[0][0] = mUnitVectors[0];
+		normalVectors[1][0] = mUnitVectors[1];
+		normalVectors[2][0] = mUnitVectors[2];
 		
 		
+	}
+	
+	public void rotateCube(RotMatrix rm) {
+		
+//		RotMatrix rx = RotMatrix.xRotMatrix( );
+//		RotMatrix ry = RotMatrix.yRotMatrix( );
+//		RotMatrix rz = RotMatrix.zRotMatrix( );
+//		
+//		
 	}
 	@Override
     public int compareTo (Cube other){

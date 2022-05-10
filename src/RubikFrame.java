@@ -13,6 +13,7 @@ public class RubikFrame extends JFrame {
 	// private RubiksCube mRubikCube;
 	private RubikComp mRubikComp;
 
+
 	public static void main(String[] args) {
 		JFrame f = new JFrame("Rubik's Cube");
 		f.setLayout(new FlowLayout());
@@ -32,5 +33,6 @@ public class RubikFrame extends JFrame {
 		f.pack();
 		f.setVisible(true);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 	}
 }
