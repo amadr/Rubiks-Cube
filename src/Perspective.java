@@ -1,7 +1,8 @@
 import java.awt.Graphics2D;
 
 /**
- * 
+ * The calculation from 3D to 2D is done here. Also the paint methods for a
+ * square, the cube and the whole Rubik's cube are declared here.
  */
 
 public class Perspective {
@@ -33,7 +34,7 @@ public class Perspective {
 		
 	}
 	
-	public void paintRubiksCube(Graphics2D g2, RubiksCube rc) {
+	public void paintRubiksCube(Graphics2D g2/*, RubiksCube rc*/) {
 		
 	}
 }
