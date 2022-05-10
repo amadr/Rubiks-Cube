@@ -28,6 +28,10 @@ public class Square {
 		this.mEdges[2] = e[2];
 		this.mEdges[3] = e[3];
 	}
+	
+	public Vector3D[] getEdges() {
+		return mEdges;
+	}
 
 	public void setNomalVec(Vector3D nv) {
 		this.mNormalVector = nv ; 

@@ -14,15 +14,18 @@ import javax.swing.JComponent;
 
 public class RubikComp extends JComponent implements Runnable {
 	//private RubiksCube mCube;
+	private Square mSquare;
 	private Vector3D mVector1 = new Vector3D(5,5,5);
-	private Vector3D mVector2 = new Vector3D(100,5,5);
-	private Vector3D mVector3 = new Vector3D(100,100,5);
-	private Vector3D mVector4 = new Vector3D(5,100,5);
+	private Vector3D mVector2 = new Vector3D(50,5,5);
+	private Vector3D mVector3 = new Vector3D(50,50,5);
+	private Vector3D mVector4 = new Vector3D(5,50,5);
 	private Perspective mPerspective;
 	private RotMatrix mRotMatrix;
-	private int r = 35;
 	
 	public RubikComp() {
+		mSquare = new Square(mVector1, mVector2, mVector3, mVector4, new Vector3D(1,0,0));
+		mPerspective = new Perspective();
+		
     	setPreferredSize (new Dimension (600, 600));
     	Thread th = new Thread (this);
         th.start ();
@@ -40,14 +43,13 @@ public class RubikComp extends JComponent implements Runnable {
 		//g.setColor(Color.WHITE);
 		//g.fillRect(0, 0, w, h);
 		
-    	//int r = 35;
-    	//Shape ball = new Ellipse2D.Double(w/2-r/2, h/2-r/2, r++, r++);
-        //g2.fill(ball);
         int[] x = {(int) mVector1.getX(), (int) mVector2.getX(), (int) mVector3.getX(), (int) mVector4.getX()};
         int[] y = {(int) mVector1.getY(), (int) mVector2.getY(), (int) mVector3.getY(), (int) mVector4.getY()};
 
         Shape myVectorShape = new Polygon(x, y, 4);
-        g2.fill(myVectorShape);
+        //g2.fill(myVectorShape);
+        
+        mPerspective.paintSquare(g2, mSquare);
         //g2.drawPolygon(x, y, 4);
 	}
 

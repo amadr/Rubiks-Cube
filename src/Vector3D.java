@@ -47,11 +47,8 @@ public class Vector3D {
 	}
 
 	public Vector3D getScaledVector(double scale) {
-		Vector3D rv = new Vector3D(); 
-		rv.mVector[0] *= scale;
-		rv.mVector[1] *= scale;
-		rv.mVector[2] *= scale;
-		
+		Vector3D rv = new Vector3D();
+		rv.scaleVector(scale);
 		return rv; 
 	}
 
