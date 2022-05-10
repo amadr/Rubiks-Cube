@@ -19,7 +19,7 @@ public class Square {
 		this.mEdges[1] = ur;
 		this.mEdges[2] = ll;
 		this.mEdges[3] = lr;
-		this.mNormalVec = nv;
+		this.mNormalVec = nv;				
 	}
 
 	public void setEdges(Vector3D[] e) {
