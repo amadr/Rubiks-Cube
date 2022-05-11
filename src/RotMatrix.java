@@ -39,8 +39,8 @@ public class RotMatrix {
 		int row = mRotMatrix.length - 1, col = mRotMatrix[0].length - 1;
 		int rotLength = rot.length - 1;
 
-		for (int i = row - 1; i >= 0; i--) {
-			for (int j = col - 1; j >= 0; j--) {
+		for (int i = row; i >= 0; i--) {
+			for (int j = col; j >= 0; j--) {
 				if(rotLength >= 0) {
 					mRotMatrix[i][j] = rot[rotLength--];
 				}
@@ -72,23 +72,26 @@ public class RotMatrix {
 	}
 
 	public static RotMatrix xRotMatrix(double phi) {
-		double[] xRot = {1, 0,	0, 
+		final double[] xRot = {1, 0, 0, 
 						 0, Math.cos(phi), -Math.sin(phi), 
 						 0, Math.sin(phi), Math.cos(phi)};
-		return new RotMatrix(xRot);
+		final RotMatrix xRotMatrix = new RotMatrix(xRot);
+		return xRotMatrix;
 	}
 	
 	public static RotMatrix yRotMatrix(double phi) {
-		double[] yRot = {Math.cos(phi), 0,	Math.sin(phi), 
+		final double[] yRot = {Math.cos(phi), 0, Math.sin(phi), 
 						 0, 1, 0,
 						 -Math.sin(phi), 0, Math.cos(phi)};
-		return new RotMatrix(yRot);
+		final RotMatrix yRotMatrix = new RotMatrix(yRot);
+		return yRotMatrix;
 	}
 	
 	public static RotMatrix zRotMatrix(double phi) {
-		double[] zRot = {Math.cos(phi), -Math.sin(phi),	0, 
+		final double[] zRot = {Math.cos(phi), -Math.sin(phi), 0, 
 						 Math.sin(phi), Math.cos(phi), 0, 
 						 0, 0, 1};
-		return new RotMatrix(zRot);
+		final RotMatrix zRotMatrix = new RotMatrix(zRot);
+		return zRotMatrix;
 	}
 }

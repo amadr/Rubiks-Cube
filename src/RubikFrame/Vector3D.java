@@ -1,3 +1,4 @@
+package RubikFrame;
 /**
  * 
  */
@@ -46,43 +47,26 @@ public class Vector3D {
 						 mVector[2] * mVector[2]);
 	}
 
-	public Vector3D getScaledVector(double scale) {
-		Vector3D rv = new Vector3D();
-		rv.scaleVector(scale);
-		return rv; 
-	}
-
 	public void scaleVector(double scale) {
 		mVector[0] *= scale;
 		mVector[1] *= scale;
 		mVector[2] *= scale;
 	}
-	
+
 	public void normalizeVector() {
 		scaleVector(1 / getLength());
 	}
-	
-	public void addVector(Vector3D other) {
-		mVector[0] += other.mVector[0];
-		mVector[1] += other.mVector[1];
-		mVector[2] += other.mVector[2];
+
+	public void addVector(double[] other) {
+		mVector[0] += other[0];
+		mVector[1] += other[1];
+		mVector[2] += other[2];
 	}
 
-	public void subtractVector(Vector3D other) {
-		mVector[0] -= other.mVector[0];
-		mVector[1] -= other.mVector[1];
-		mVector[2] -= other.mVector[2];
-	}
-	
-	public void copyVector(Vector3D other) {			
-		mVector[0] = other.mVector[0];
-		mVector[1] = other.mVector[1];
-		mVector[2] = other.mVector[2];
-	}
-	
-	public Vector3D arrayToVector(double [] a) {	
-		Vector3D vec = new Vector3D(a[0],a[1],a[2]);
-		return vec ;
+	public void copyVector(double[] other) {
+		mVector[0] = other[0];
+		mVector[1] = other[1];
+		mVector[2] = other[2];
 	}
 
 	public void rotateVector(RotMatrix rotMatrix) {
@@ -94,9 +78,7 @@ public class Vector3D {
 				result[i] += (mVector[j] * rotMatrix.mRotMatrix[i][j]);
 			}
 		}
-		mVector[0] = result[0];
-		mVector[1] = result[1];
-		mVector[2] = result[2];
+		mVector = result;
 	}
 	
 }
