@@ -34,7 +34,7 @@ public class Square {
 	}
 
 	public void setNomalVec(Vector3D nv) {
-		this.mNormalVector = nv ; 
+		this.mNormalVector = nv;
 	}
 
 	public void setColor(Color c) {
