@@ -79,6 +79,11 @@ public class Vector3D {
 		mVector[1] = other.mVector[1];
 		mVector[2] = other.mVector[2];
 	}
+	
+	public Vector3D arrayToVector(double [] a) {	
+		Vector3D vec = new Vector3D(a[0],a[1],a[2]);
+		return vec ;
+	}
 
 	public void rotateVector(RotMatrix rotMatrix) {
 		int row = rotMatrix.mRotMatrix.length, col = rotMatrix.mRotMatrix[0].length;
@@ -89,7 +94,9 @@ public class Vector3D {
 				result[i] += (mVector[j] * rotMatrix.mRotMatrix[i][j]);
 			}
 		}
-		mVector = result;
+		mVector[0] = result[0];
+		mVector[1] = result[1];
+		mVector[2] = result[2];
 	}
 	
 }

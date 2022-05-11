@@ -22,9 +22,14 @@ public class RubikComp extends JComponent implements Runnable {
 	private Perspective mPerspective;
 	private RotMatrix mRotMatrix;
 	
+	private Vector3D mVector5 = new Vector3D(100,100,5);	// Vector für Cube 
+	private Cube mTestCube; 								
+	
 	public RubikComp() {
 		mSquare = new Square(mVector1, mVector2, mVector3, mVector4, new Vector3D(1,0,0));
 		mPerspective = new Perspective();
+		
+		mTestCube = new Cube (mVector5);				// Test cube 
 		
     	setPreferredSize (new Dimension (600, 600));
     	Thread th = new Thread (this);
