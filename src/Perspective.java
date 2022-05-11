@@ -52,7 +52,7 @@ public class Perspective {
 		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 2; j++)
-				paintSquare(g2, cb.area[i][j]);
+				paintSquare(g2, cb.mArea[i][j]);
 		}
 	}
 	
