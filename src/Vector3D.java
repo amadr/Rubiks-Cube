@@ -33,7 +33,7 @@ public class Vector3D {
 	}
 
 	public double getZ() {
-		return mVector[3];
+		return mVector[2];
 	}
 
 	public void setZ(double z) {

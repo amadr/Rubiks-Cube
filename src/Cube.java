@@ -18,12 +18,12 @@ public class Cube implements Comparable<Cube> {
 	public  Vector3D [][] normalVectors  = new Vector3D [3][2];
 
 	
-	public Cube ()		 // Nicht sicher, ob Daten übergeben werden sollen 
+	public Cube ()		 // Nicht sicher, ob Daten ï¿½bergeben werden sollen 
 	{	
 		
 	}
 	
-	public Cube (Vector3D toMid)		 // Nicht sicher, ob Daten übergeben werden sollen 
+	public Cube (Vector3D toMid)		 // Nicht sicher, ob Daten ï¿½bergeben werden sollen 
 	{	
 		this.toMid = toMid; // Vector mit Ausrichtung auf Mittelpunkt (0,0,0)
 //		vx.normalizeVector();
@@ -32,7 +32,7 @@ public class Cube implements Comparable<Cube> {
 //		this.mUnitVectors[0]= vx;
 //		this.mUnitVectors[1]= vy;
 //		this.mUnitVectors[2]= vz;
-//		this.edgeLength = 10;	// TODO muss angepasst werden 	
+		this.edgeLength = 100;	// TODO muss angepasst werden 	
 		
 		this.mUnitVectors[0] = new Vector3D(1,0,0);	// Einheitsvectoren 
 		this.mUnitVectors[1] = new Vector3D(0,1,0);
