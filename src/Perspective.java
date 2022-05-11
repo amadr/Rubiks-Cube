@@ -1,7 +1,7 @@
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.Shape;
-import java.util.zip.ZipEntry;
 
 /**
  * The calculation from 3D to 2D is done here. Also the paint methods for a
@@ -35,7 +35,7 @@ public class Perspective {
 		
 		int[] x = new int[4];
 		int[] y = new int[4];
-		
+				
 		for (int i = 0; i < sq.getEdges().length; i++) {
 			x[i] = (int) sq.getEdges()[i].getX();
 			y[i] = (int) sq.getEdges()[i].getY();
@@ -45,6 +45,8 @@ public class Perspective {
 
         Shape myVectorShape = new Polygon(x, y, 4);
         g2.draw(myVectorShape);
+        Shape blaShape = new Rectangle(x[0], y[0], 100, 100);
+        //g2.draw(blaShape);
         //g2.fill(myVectorShape);
 	}
 	

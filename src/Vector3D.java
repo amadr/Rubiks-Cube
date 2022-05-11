@@ -8,7 +8,11 @@ public class Vector3D {
 	 */
 	private double[] mVector = new double[3];
 
-	public Vector3D() {}
+	public Vector3D() {
+		mVector[0] = 1;
+		mVector[1] = 1;
+		mVector[2] = 1;
+	}
 
 	public Vector3D(double x, double y, double z) {
 		mVector[0] = x;
@@ -48,6 +52,7 @@ public class Vector3D {
 
 	public Vector3D getScaledVector(double scale) {
 		Vector3D rv = new Vector3D();
+		rv.copyVector(this);
 		rv.scaleVector(scale);
 		return rv; 
 	}
@@ -72,6 +77,8 @@ public class Vector3D {
 		mVector[0] -= other.mVector[0];
 		mVector[1] -= other.mVector[1];
 		mVector[2] -= other.mVector[2];
+		
+		System.out.println("x: " + mVector[0] + "y: " + mVector[1] + "z: " + mVector[2] );
 	}
 	
 	public void copyVector(Vector3D other) {			

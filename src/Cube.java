@@ -26,7 +26,7 @@ public class Cube implements Comparable<Cube> {
 	public Cube (Vector3D toMid)		 // Nicht sicher, ob Daten �bergeben werden sollen 
 	{	
 		
-		this.edgeLength = 10;	// TODO muss angepasst werden 	
+		this.edgeLength = 200;	// TODO muss angepasst werden 	
 		this.mToMid = toMid; // Vector mit Ausrichtung auf Mittelpunkt (0,0,0)
 		this.mUnitVectors[0] = new Vector3D(1,0,0);	// Einheitsvectoren 
 		this.mUnitVectors[1] = new Vector3D(0,1,0);
@@ -35,45 +35,53 @@ public class Cube implements Comparable<Cube> {
 		
 	 // ###########  Ecken berechnen #####################
 		
-		Vector3D ulf= toMid;												// claculate upper left corner
+		//Vector3D ulf= new Vector3D(toMid.getX(),toMid.getY(),toMid.getZ() );												// claculate upper left corner
+		Vector3D ulf = new Vector3D();
+		ulf.copyVector(toMid);
 		ulf.subtractVector(this.mUnitVectors[0].getScaledVector(0.5*this.edgeLength));
 		ulf.addVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));	
 		ulf.addVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
-		this.mEdges[0][0][0] = ulf; 
+		this.mEdges[0][0][0] = ulf;
 		
-		Vector3D urf= toMid;												// claculate upper right corner
+		Vector3D urf= new Vector3D();
+		urf.copyVector(toMid);// claculate upper right corner
 		urf.addVector(this.mUnitVectors[0].getScaledVector(0.5*this.edgeLength));
 		urf.addVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));
 		ulf.addVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
 		this.mEdges[1][0][0] = urf; 
 		
-		
-		Vector3D llf= toMid;												// claculate lower left corner
+		Vector3D llf= new Vector3D();
+		llf.copyVector(toMid);// claculate lower left corner
 		llf.subtractVector(this.mUnitVectors[0].getScaledVector(0.5*this.edgeLength));
 		llf.subtractVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));
 		llf.subtractVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
 		this.mEdges[0][1][0] = llf; 
 		
-		Vector3D lrf= toMid;												// claculate upper right corner
+		Vector3D lrf= new Vector3D();												// claculate upper right corner
+		lrf.copyVector(toMid);
 		lrf.addVector(this.mUnitVectors[0].getScaledVector(0.5*this.edgeLength));
 		lrf.subtractVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));
 		llf.subtractVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
 		this.mEdges[1][1][0] = lrf; 
 		
 		//###### backside
-		Vector3D ulb = ulf;													// calculate the backside
+		Vector3D ulb = new Vector3D();
+		ulb.copyVector(ulf);// calculate the backside
 		ulb.addVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
 		this.mEdges[0][0][1] = ulb; 
 		
-		Vector3D urb = urf;
+		Vector3D urb = new Vector3D();
+		urb.copyVector(urf);
 		urb.addVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
 		this.mEdges[1][0][1] = urb; 
 		
-		Vector3D llb = llf;
+		Vector3D llb = new Vector3D();
+		llb.copyVector(llf);
 		llb.addVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
 		this.mEdges[0][1][1] = llb; 
 		
-		Vector3D lrb = lrf;
+		Vector3D lrb = new Vector3D();
+		lrb.copyVector(lrf);
 		lrb.addVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
 		this.mEdges[1][1][1] = lrb; 
 		
