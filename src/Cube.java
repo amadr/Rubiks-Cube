@@ -82,7 +82,7 @@ public class Cube implements Comparable<Cube> {
 		
 		Vector3D lrb = new Vector3D();
 		lrb.copyVector(lrf);
-		lrb.addVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
+		lrb.addVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
 		this.mEdges[1][1][1] = lrb; 
 		
 		
@@ -102,49 +102,44 @@ public class Cube implements Comparable<Cube> {
 		// ############### Areas erstellen ##########
 		
 	
-		Square front = new Square(this.mEdges[0][0][0],this.mEdges[1][0][0],this.mEdges[0][1][0],this.mEdges[1][1][0],this.mNormalVectors[2][0]);
+//		Square front = new Square(this.mEdges[0][0][0],this.mEdges[1][0][0],this.mEdges[0][1][0],this.mEdges[1][1][0],this.mNormalVectors[2][0]);
+//		this.mArea[2][0]= front ;
+//		
+//		Square back = new Square(this.mEdges[0][0][1],this.mEdges[1][0][1],this.mEdges[0][1][1],this.mEdges[1][1][1],this.mNormalVectors[2][1]);
+//		this.mArea[2][1]= back ;
+//		
+//		Square left = new Square(this.mEdges[0][0][0],this.mEdges[0][0][1],this.mEdges[0][1][0],this.mEdges[0][1][1],this.mNormalVectors[0][1]);
+//		this.mArea[0][1]= left ;
+//		
+//		Square right = new Square(this.mEdges[1][0][0],this.mEdges[1][0][1],this.mEdges[1][1][0],this.mEdges[1][1][1],this.mNormalVectors[0][0]);
+//		this.mArea[0][0]= right ;
+//
+//		Square top = new Square(this.mEdges[0][0][0],this.mEdges[1][0][0],this.mEdges[0][0][0],this.mEdges[1][0][1],this.mNormalVectors[1][0]);
+//		this.mArea[1][0]= top ;
+//		
+//		Square bot = new Square(this.mEdges[0][1][0],this.mEdges[1][1][0],this.mEdges[0][1][0],this.mEdges[1][1][1],this.mNormalVectors[1][1]);
+//		this.mArea[1][1]= bot ;
+		
+		Square front = new Square(this.mEdges[0][0][0],this.mEdges[1][0][0],this.mEdges[1][1][0],this.mEdges[0][1][0],this.mNormalVectors[2][0]);
 		this.mArea[2][0]= front ;
 		
-		Square back = new Square(this.mEdges[0][0][1],this.mEdges[1][0][1],this.mEdges[0][1][1],this.mEdges[1][1][1],this.mNormalVectors[2][1]);
+		Square back = new Square(this.mEdges[0][0][1],this.mEdges[1][0][1],this.mEdges[1][1][1],this.mEdges[0][1][1],this.mNormalVectors[2][1]);
 		this.mArea[2][1]= back ;
 		
-		Square left = new Square(this.mEdges[0][0][0],this.mEdges[0][0][1],this.mEdges[0][1][0],this.mEdges[0][1][1],this.mNormalVectors[0][1]);
+		Square left = new Square(this.mEdges[0][0][0],this.mEdges[0][0][1],this.mEdges[0][1][1],this.mEdges[0][1][0],this.mNormalVectors[0][1]);
 		this.mArea[0][1]= left ;
 		
 
-		Square right = new Square(this.mEdges[1][0][0],this.mEdges[1][0][1],this.mEdges[1][1][0],this.mEdges[1][1][1],this.mNormalVectors[0][0]);
+		Square right = new Square(this.mEdges[1][0][0],this.mEdges[1][0][1],this.mEdges[1][1][1],this.mEdges[1][1][0],this.mNormalVectors[0][0]);
 		this.mArea[0][0]= right ;
 		
 
-		Square top = new Square(this.mEdges[0][0][0],this.mEdges[1][0][0],this.mEdges[0][0][0],this.mEdges[1][0][1],this.mNormalVectors[1][0]);
+		Square top = new Square(this.mEdges[0][0][0],this.mEdges[1][0][0],this.mEdges[1][0][1],this.mEdges[0][0][1],this.mNormalVectors[1][0]);
 		this.mArea[1][0]= top ;
 		
 
-		Square bot = new Square(this.mEdges[0][1][0],this.mEdges[1][1][0],this.mEdges[0][1][0],this.mEdges[1][1][1],this.mNormalVectors[1][1]);
+		Square bot = new Square(this.mEdges[0][1][0],this.mEdges[1][1][0],this.mEdges[1][1][1],this.mEdges[0][1][1],this.mNormalVectors[1][1]);
 		this.mArea[1][1]= bot ;
-		
-		
-//
-//		Square front = new Square(this.mEdges[1][1][1],this.mEdges[1][1][1],this.mEdges[1][1][1],this.mEdges[1][1][1],this.mNormalVectors[2][0]);
-//		this.mArea[2][0]= front ;
-//		
-//		Square back = new Square(this.mEdges[1][1][1],this.mEdges[1][1][1],this.mEdges[1][1][1],this.mEdges[1][1][1],this.mNormalVectors[2][0]);
-//		this.mArea[2][1]= back ;
-//		
-//		Square left = new Square(this.mEdges[1][1][1],this.mEdges[1][1][1],this.mEdges[1][1][1],this.mEdges[1][1][1],this.mNormalVectors[2][0]);
-//		this.mArea[0][1]= left ;
-//		
-//
-//		Square right = new Square(this.mEdges[1][1][1],this.mEdges[1][1][1],this.mEdges[1][1][1],this.mEdges[1][1][1],this.mNormalVectors[2][0]);
-//		this.mArea[0][0]= right ;
-//		
-//
-//		Square top = new Square(this.mEdges[1][1][1],this.mEdges[1][1][1],this.mEdges[1][1][1],this.mEdges[1][1][1],this.mNormalVectors[2][0]);
-//		this.mArea[1][0]= top ;
-//		
-//
-//		Square bot = new Square(this.mEdges[1][1][1],this.mEdges[1][1][1],this.mEdges[1][1][1],this.mEdges[1][1][1],this.mNormalVectors[2][0]);
-//		this.mArea[1][1]= bot ;
 	
 	}
 	
@@ -214,18 +209,24 @@ public class Cube implements Comparable<Cube> {
 		RotMatrix xm = new RotMatrix();
 		RotMatrix ym = new RotMatrix();
 		RotMatrix zm = new RotMatrix();
-		xm =RotMatrix.xRotMatrix(1.1);
-		ym =	RotMatrix.yRotMatrix(1.1);
-		zm = RotMatrix.zRotMatrix(1.1);
+		xm = RotMatrix.xRotMatrix(Math.PI/20);
+		ym = RotMatrix.yRotMatrix(Math.PI/20);
+		zm = RotMatrix.zRotMatrix(Math.PI/20);
 		
-
+		for(int i = 0; i < 2; i++) {
+			for(int j = 0; j < 2; j++) {
+				for(int k = 0; k < 2; k++) {
+					mEdges[i][j][k].rotateVector(xm);
+					mEdges[i][j][k].rotateVector(ym);
+					mEdges[i][j][k].rotateVector(zm);
+				}
+			}
+			
+		}
+		
 		this.mUnitVectors[0].rotateVector(xm);
 		this.mUnitVectors[1].rotateVector(ym);
-
 		this.mUnitVectors[2].rotateVector(zm);
-
-		
-
 	}
 	@Override
     public int compareTo (Cube other){

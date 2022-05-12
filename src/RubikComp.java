@@ -20,12 +20,14 @@ public class RubikComp extends JComponent implements Runnable {
 	private Perspective mPerspective;
 	private RotMatrix mRotMatrix;
 	
+    private Boolean rotate = true;
+	
 	public RubikComp() {
 		mSquare = new Square(mVector1, mVector2, mVector3, mVector4, new Vector3D(1,0,0));
 		
-		mCube = new Cube(new Vector3D(200, 200, 0));
+		mCube = new Cube(new Vector3D(300, 300, 100));
 		mPerspective = new Perspective();
-    	setPreferredSize (new Dimension (600, 600));
+    	setPreferredSize (new Dimension (800, 800));
     	Thread th = new Thread (this);
         th.start ();
     }
@@ -49,7 +51,10 @@ public class RubikComp extends JComponent implements Runnable {
         //g2.fill(myVectorShape);
         
         //mPerspective.paintSquare(g2, mSquare);
-        
+        if(rotate) {
+            mCube.rotateCube();
+            rotate = false;
+        }
         mPerspective.paintCube(g2, mCube);
         //g2.drawPolygon(x, y, 4);
 	}

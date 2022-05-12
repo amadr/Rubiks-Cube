@@ -17,8 +17,8 @@ public class Square {
 	public Square(Vector3D ul, Vector3D ur, Vector3D lr, Vector3D ll, Vector3D nv) {
 		this.mEdges[0] = ul;
 		this.mEdges[1] = ur;
-		this.mEdges[2] = ll;
-		this.mEdges[3] = lr;
+		this.mEdges[2] = lr;
+		this.mEdges[3] = ll;
 		this.mNormalVector = nv;				
 	}
 

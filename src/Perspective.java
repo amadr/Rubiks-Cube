@@ -1,6 +1,6 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.awt.Shape;
 
 /**
@@ -11,12 +11,19 @@ import java.awt.Shape;
 public class Perspective {
 	private double mXoffset, mYoffset, mScale;
 	
+	private Color mColor[];
+	
 	private int a = 0;
 	
 	public Perspective() {
 		mXoffset = 0;
 		mYoffset = 0;
 		mScale = 1;
+		mColor = new Color[3];
+		mColor[0] = Color.GREEN;
+		mColor[1] = Color.RED;
+		mColor[2] = Color.YELLOW;
+
 	}
 	
 	public void setXOffset(double x) {
@@ -35,18 +42,20 @@ public class Perspective {
 		
 		int[] x = new int[4];
 		int[] y = new int[4];
-				
+		
 		for (int i = 0; i < sq.getEdges().length; i++) {
+			//parallel_projection(sq.getEdges()[i]);
 			x[i] = (int) sq.getEdges()[i].getX();
 			y[i] = (int) sq.getEdges()[i].getY();
 			
-			System.out.println( "x: " + x[i] + ", y: " + y[i]);
+//			System.out.println( "x: " + x[i] + ", y: " + y[i]);
+
+	        g2.setColor(Color.RED);
 		}
 
         Shape myVectorShape = new Polygon(x, y, 4);
+
         g2.draw(myVectorShape);
-        Shape blaShape = new Rectangle(x[0], y[0], 100, 100);
-        //g2.draw(blaShape);
         //g2.fill(myVectorShape);
 	}
 	
@@ -54,7 +63,7 @@ public class Perspective {
 		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 2; j++)
-				paintSquare(g2, cb.mArea[i][j]);			
+				paintSquare(g2, cb.mArea[i][j]);
 		}
 	}
 	
@@ -63,9 +72,9 @@ public class Perspective {
 	}
 	
 	private void parallel_projection(Vector3D vec) {
-		int distance = 4;
-		
-		double projectionConst = (1 / distance - vec.getZ());
+		int distance = 1;
+		System.out.println("Z: " + vec.getZ());
+		double projectionConst = (1 / distance - vec.getZ()/100 );
 		vec.setX(projectionConst * vec.getX());
 		vec.setY(projectionConst * vec.getY());		
 	}
