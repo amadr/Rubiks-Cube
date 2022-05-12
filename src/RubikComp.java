@@ -25,7 +25,6 @@ public class RubikComp extends JComponent implements Runnable {
 		
 		mCube = new Cube(new Vector3D(200, 200, 0));
 		mPerspective = new Perspective();
-		
     	setPreferredSize (new Dimension (600, 600));
     	Thread th = new Thread (this);
         th.start ();
