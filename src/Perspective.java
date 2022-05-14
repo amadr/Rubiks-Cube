@@ -50,13 +50,17 @@ public class Perspective {
 			
 //			System.out.println( "x: " + x[i] + ", y: " + y[i]);
 
-	        g2.setColor(Color.RED);
+	       g2.setColor(Color.BLUE);
+//	       else if (i==1) {g2.setColor(Color.GREEN);}		// Hab versuch jede Fläche anders zu färben, damit man die drehung besser erkennen kann
+//	       else if (i==2) {g2.setColor(Color.RED);}
+//	       else if (i==3) {g2.setColor(Color.YELLOW);}
+	       
 		}
 
         Shape myVectorShape = new Polygon(x, y, 4);
 
         g2.draw(myVectorShape);
-        //g2.fill(myVectorShape);
+   //     g2.fill(myVectorShape);
 	}
 	
 	public void paintCube(Graphics2D g2, Cube cb) {
