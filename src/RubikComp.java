@@ -11,7 +11,6 @@ import javax.swing.JComponent;
 
 public class RubikComp extends JComponent implements Runnable {
 	//private RubiksCube mCube;
-	private Square mSquare;
 	private Cube mCube;
 	private Vector3D mVector1 = new Vector3D(5,5,5);
 	private Vector3D mVector2 = new Vector3D(100,5,5);
@@ -22,10 +21,9 @@ public class RubikComp extends JComponent implements Runnable {
 	
     private Boolean rotate = true;
 	
-	public RubikComp() {
-		mSquare = new Square(mVector1, mVector2, mVector3, mVector4, new Vector3D(1,0,0));
+	public RubikComp() {		
+		mCube = new Cube(new Vector3D(400, 400, 100));
 		
-		mCube = new Cube(new Vector3D(300, 300, 100));
 		mPerspective = new Perspective();
     	setPreferredSize (new Dimension (800, 800));
     	Thread th = new Thread (this);
@@ -41,22 +39,11 @@ public class RubikComp extends JComponent implements Runnable {
 		int w = getWidth();
 		int h = getHeight();
 
-	//	g.setColor(Color.WHITE);
-	//	g.fillRect(0, 0, w, h);
-		
-        int[] x = {(int) mVector1.getX(), (int) mVector2.getX(), (int) mVector3.getX(), (int) mVector4.getX()};
-        int[] y = {(int) mVector1.getY(), (int) mVector2.getY(), (int) mVector3.getY(), (int) mVector4.getY()};
-
-        //Shape myVectorShape = new Polygon(x, y, 4);
-      //  g2.fill(myVectorShape);
-        
-        //mPerspective.paintSquare(g2, mSquare);
         if(rotate) {
             mCube.rotateCube();
-         //  rotate = false;
+            //rotate = false;
         }
         mPerspective.paintCube(g2, mCube);
-        //g2.drawPolygon(x, y, 4);
 	}
 
 	@Override
@@ -67,7 +54,7 @@ public class RubikComp extends JComponent implements Runnable {
 			repaint();
 			
 			try { 
-					Thread.sleep(70); 
+					Thread.sleep(80); // time to sleep -> 10?
 				} 
 			catch (InterruptedException e) {}
         }
