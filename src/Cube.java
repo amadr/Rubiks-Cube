@@ -1,4 +1,4 @@
-import java.util.Iterator;
+import java.awt.Color;
 
 /**
  * 
@@ -9,7 +9,7 @@ public class Cube implements Comparable<Cube> {
 	
 	private Vector3D mToMid;
 	
-	public Vector3D[] mUnitVectors   = new Vector3D[3];
+	public Vector3D[] mUnitVectors   = new Vector3D[6];
 	
 	public  Vector3D [][][] mEdges = new Vector3D [2][2][2];
 	
@@ -27,11 +27,14 @@ public class Cube implements Comparable<Cube> {
 	{	
 		
 		
-		this.edgeLength = 200;	// TODO muss angepasst werden 	
+		this.edgeLength = 100;	// TODO muss angepasst werden 	
 		this.mToMid = toMid; // Vector mit Ausrichtung auf Mittelpunkt (0,0,0)
 		this.mUnitVectors[0] = new Vector3D(1,0,0);	// Einheitsvectoren 
 		this.mUnitVectors[1] = new Vector3D(0,1,0);
 		this.mUnitVectors[2] = new Vector3D(0,0,1);
+		this.mUnitVectors[3] = new Vector3D(-1,0,0);
+		this.mUnitVectors[4] = new Vector3D(0,-1,0);
+		this.mUnitVectors[5] = new Vector3D(0,0,-1);
 		
 		
 	 // ###########  Ecken berechnen #####################
@@ -39,65 +42,52 @@ public class Cube implements Comparable<Cube> {
 		//Vector3D ulf= new Vector3D(toMid.getX(),toMid.getY(),toMid.getZ() );												// claculate upper left corner
 		Vector3D ulf = new Vector3D();
 		ulf.copyVector(toMid);
-		System.out.println("ulf Vor: x :"+ulf.getX()+"y :"+ulf.getY()+"z :"+ulf.getZ());
-		
 		ulf.subtractVector(this.mUnitVectors[0].getScaledVector(0.5*this.edgeLength));
-		ulf.addVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));	
-		ulf.addVector(this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
+		ulf.subtractVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));	
+		ulf.subtractVector(this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
 		this.mEdges[0][0][0] = ulf;
-		//this.mEdges[0][0][0].copyVector(ulf);
-		
-		System.out.println("ulf nach: x :"+ulf.getX()+"y :"+ulf.getY()+"z :"+ulf.getZ());
 		
 		Vector3D urf = new Vector3D();
 		urf.copyVector(toMid);// claculate upper right corner
 		urf.addVector(this.mUnitVectors[0].getScaledVector(0.5*this.edgeLength));
-		urf.addVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));
-		urf.addVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
-		this.mEdges[1][0][0] = urf;
-		//this.mEdges[1][0][0].copyVector(urf);
-		
+		urf.subtractVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));
+		urf.subtractVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
+		this.mEdges[1][0][0] = urf;		
 		
 		Vector3D llf = new Vector3D();
 		llf.copyVector(toMid);// claculate lower left corner
 		llf.subtractVector(this.mUnitVectors[0].getScaledVector(0.5*this.edgeLength));
-		llf.subtractVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));
-		llf.addVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
+		llf.addVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));
+		llf.subtractVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
 		this.mEdges[0][1][0] = llf;
-		//this.mEdges[0][1][0].copyVector(llf);
 		
 		Vector3D lrf= new Vector3D();												// claculate upper right corner
 		lrf.copyVector(toMid);
 		lrf.addVector(this.mUnitVectors[0].getScaledVector(0.5*this.edgeLength));
-		lrf.subtractVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));
-		lrf.addVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
+		lrf.addVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));
+		lrf.subtractVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
 		this.mEdges[1][1][0] = lrf;
-		//this.mEdges[1][1][0].copyVector(lrf);
 		
 		//###### backside
 		Vector3D ulb = new Vector3D();
 		ulb.copyVector(ulf);// calculate the backside
-		ulb.subtractVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
+		ulb.addVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
 		this.mEdges[0][0][1] = ulb;
-		//this.mEdges[0][0][1].copyVector(ulb);
 		
 		Vector3D urb = new Vector3D();
 		urb.copyVector(urf);
-		urb.subtractVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
+		urb.addVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
 		this.mEdges[1][0][1] = urb;
-		//this.mEdges[1][0][1].copyVector(urb);
 		
 		Vector3D llb = new Vector3D();
 		llb.copyVector(llf);
-		llb.subtractVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
+		llb.addVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
 		this.mEdges[0][1][1] = llb;
-		//this.mEdges[0][1][1].copyVector(llb);
 		
 		Vector3D lrb = new Vector3D();
 		lrb.copyVector(lrf);
-		lrb.subtractVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
+		lrb.addVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
 		this.mEdges[1][1][1] = lrb;
-		//this.mEdges[1][1][1].copyVector(lrb);
 		
 		
 		// ############### normalen erstellen ##########	
@@ -108,45 +98,30 @@ public class Cube implements Comparable<Cube> {
 	
 public void setSquares() {
 		
-		Square front = new Square(this.mEdges[0][0][0],this.mEdges[1][0][0],this.mEdges[1][1][0],this.mEdges[0][1][0],this.mNormalVectors[2][0]);
-		this.mArea[2][0]= front ;
-		
-		Square back = new Square(this.mEdges[0][0][1],this.mEdges[1][0][1],this.mEdges[1][1][1],this.mEdges[0][1][1],this.mNormalVectors[2][1]);
-		this.mArea[2][1]= back ;
-		
-		Square left = new Square(this.mEdges[0][0][1],this.mEdges[0][0][0],this.mEdges[0][1][0],this.mEdges[0][1][1],this.mNormalVectors[0][1]);
-		this.mArea[0][1]= left ;
-		
+	Square front = new Square(this.mEdges[0][0][0], this.mEdges[1][0][0], this.mEdges[1][1][0], this.mEdges[0][1][0],
+			this.mNormalVectors[2][1], Color.GREEN);
+	this.mArea[2][0] = front;
 
-		Square right = new Square(this.mEdges[1][0][1],this.mEdges[1][0][0],this.mEdges[1][1][0],this.mEdges[1][1][1],this.mNormalVectors[0][0]);
-		this.mArea[0][0]= right ;
-		
+	Square back = new Square(this.mEdges[0][0][1], this.mEdges[1][0][1], this.mEdges[1][1][1], this.mEdges[0][1][1],
+			this.mNormalVectors[2][0], Color.BLUE);
+	this.mArea[2][1] = back;
 
-		Square top = new Square(this.mEdges[0][0][1],this.mEdges[1][0][1],this.mEdges[1][0][0],this.mEdges[0][0][0],this.mNormalVectors[1][0]);
-		this.mArea[1][0]= top ;
-		
+	Square left = new Square(this.mEdges[0][0][1], this.mEdges[0][0][0], this.mEdges[0][1][0], this.mEdges[0][1][1],
+			this.mNormalVectors[0][1], Color.ORANGE);
+	this.mArea[0][1] = left;
 
-		Square bot = new Square(this.mEdges[0][1][1],this.mEdges[1][1][1],this.mEdges[1][1][0],this.mEdges[0][1][0],this.mNormalVectors[1][1]);
-		this.mArea[1][1]= bot ;
-	}
-	
-	public void setAllColors (Color c) {
+	Square right = new Square(this.mEdges[1][0][1], this.mEdges[1][0][0], this.mEdges[1][1][0], this.mEdges[1][1][1],
+			this.mNormalVectors[0][0], Color.RED);
+	this.mArea[0][0] = right;
+
+	Square top = new Square(this.mEdges[0][0][1], this.mEdges[1][0][1], this.mEdges[1][0][0], this.mEdges[0][0][0],
+			this.mNormalVectors[1][1], Color.WHITE);
+	this.mArea[1][0] = top;
+
+	Square bot = new Square(this.mEdges[0][1][1], this.mEdges[1][1][1], this.mEdges[1][1][0], this.mEdges[0][1][0],
+			this.mNormalVectors[1][0], Color.YELLOW);
+	this.mArea[1][1] = bot;
 		
-		for (int i = 0; i < mArea.length; i++) {
-			for (int j = 0; j < mArea[i].length; j++) {
-				
-				mArea[i][j].setColor(c); 
-			}
-		}
-	}
-	
-	public void setSingleColor(Color c , int row, int column ) {
-		
-		mArea[row][column].setColor(c);
-	}	
-	
-	public Color getSingleColor(int row, int column){
-		return mArea[row][column].getColor();
 	}
 	
 	public Vector3D getMid() {
@@ -168,6 +143,8 @@ public void setSquares() {
 	
 	public void copyCube(Cube other) {
 		this.mToMid = other.mToMid;
+		/////////////////////////////////////////////
+		// ist noch abzuaendern
 		this.mUnitVectors[0] = other.mUnitVectors[0];		
 		this.mUnitVectors[1] = other.mUnitVectors[1];
 		this.mUnitVectors[2] = other.mUnitVectors[2];	
@@ -185,9 +162,9 @@ public void setSquares() {
 		this.mNormalVectors[2][0] = mUnitVectors[2];			//positive Z Richtung
 		
 
-		this.mNormalVectors[0][1] = mUnitVectors[0].getScaledVector(-1);
-		this.mNormalVectors[1][1] = mUnitVectors[1].getScaledVector(-1);
-		this.mNormalVectors[2][1] = mUnitVectors[2].getScaledVector(-1);
+		this.mNormalVectors[0][1] = mUnitVectors[3];
+		this.mNormalVectors[1][1] = mUnitVectors[4];
+		this.mNormalVectors[2][1] = mUnitVectors[5];
 //	double [] u = {mUnitVectors[1].getX() - mUnitVectors[0].getX(), mUnitVectors[1].getY() - mUnitVectors[0].getY(), mUnitVectors[1].getZ() - mUnitVectors[0].getZ()} ;				
 //	double [] v = {mUnitVectors[2].getX() - mUnitVectors[0].getX(), mUnitVectors[2].getY() - mUnitVectors[0].getY(), mUnitVectors[2].getZ() - mUnitVectors[0].getZ()} ;
 //
@@ -208,50 +185,56 @@ public void setSquares() {
 		RotMatrix xm = new RotMatrix();
 		RotMatrix ym = new RotMatrix();
 		RotMatrix zm = new RotMatrix();
-		xm = RotMatrix.xRotMatrix(Math.PI/40);
-		ym = RotMatrix.yRotMatrix(Math.PI/40);
-		zm = RotMatrix.zRotMatrix(Math.PI/40);
+		xm = RotMatrix.xRotMatrix(Math.PI/300);
+		ym = RotMatrix.yRotMatrix(Math.PI/300);
+		zm = RotMatrix.zRotMatrix(Math.PI/300);
 		
 		for(int i = 0; i < 2; i++) {
 			for(int j = 0; j < 2; j++) {
 				for(int k = 0; k < 2; k++) {
-					//mEdges[i][j][k].normalizeVector();
-
-					//System.out.println("Länge davor :"+mEdges[i][j][k].getLength());
-					
-					System.out.println("VORHER: x :"+mEdges[i][j][k].getX()+"y :"+mEdges[i][j][k].getY()+"z :"+mEdges[i][j][k].getZ());
 					
 					mEdges[i][j][k].rotateVector(xm);								
 					mEdges[i][j][k].rotateVector(ym);
-//					mEdges[i][j][k].rotateVector(zm);
-					
-									
-				//	mEdges[i][j][k].setX(mEdges[i][j][k].getX()+5);		Achsen verschieben 
-				//	mEdges[i][j][k].setY(mEdges[i][j][k].getY()+100);
-				//	mEdges[i][j][k].setZ(mEdges[i][j][k].getZ()+100);
-					
-					//System.out.println("Länge danach :"+mEdges[i][j][k].getLength());
-					System.out.println("NACHHER: x :"+mEdges[i][j][k].getX()+"y :"+mEdges[i][j][k].getY()+"z :"+mEdges[i][j][k].getZ());
+					mEdges[i][j][k].rotateVector(zm);	
 
 				}
 			}
-			
 		}
 	
-		
-		this.mUnitVectors[0].rotateVector(xm);
-		this.mUnitVectors[1].rotateVector(xm);
-		this.mUnitVectors[2].rotateVector(xm);
+		//System.out.println("VOR VOR:" + "i,j: "+ 0 + " " + 1 +"; x :"+mNormalVectors[0][1].getX()+"y :"+mNormalVectors[0][1].getY()+"z :"+mNormalVectors[0][1].getZ());
 
-		this.mUnitVectors[0].rotateVector(ym);
-		this.mUnitVectors[1].rotateVector(ym);
-		this.mUnitVectors[2].rotateVector(ym);
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 2; j++) {
+//				mNormalVectors[i][j].rotateVector(xm);
+				
+				//System.out.println("VORHER: "  + "i,j: "+ i + " " + j +"; x :" +mNormalVectors[i][j].getX()+"y :"+mNormalVectors[i][j].getY()+"z :"+mNormalVectors[i][j].getZ());
+				//mNormalVectors[i][j].rotateVector(ym);
+				//System.out.println("NACHHER:" + "i,j: "+ i + " " + j +"; x :"+mNormalVectors[i][j].getX()+"y :"+mNormalVectors[i][j].getY()+"z :"+mNormalVectors[i][j].getZ());
+
+//				mNormalVectors[i][j].rotateVector(zm);
+			}
+		}
+		// Besser weil nicht 2 loops
+		for (int i = 0; i < mUnitVectors.length; i++) {
+			mUnitVectors[i].rotateVector(xm);
+			mUnitVectors[i].rotateVector(ym);
+			mUnitVectors[i].rotateVector(zm);
+		}
+		
+//		this.mUnitVectors[0].rotateVector(xm);
+//		this.mUnitVectors[1].rotateVector(xm);
+//		this.mUnitVectors[2].rotateVector(xm);
+//
+//		this.mUnitVectors[0].rotateVector(ym);
+//		this.mUnitVectors[1].rotateVector(ym);
+//		this.mUnitVectors[2].rotateVector(ym);
 //
 //		this.mUnitVectors[0].rotateVector(zm);
 //		this.mUnitVectors[1].rotateVector(zm);
 //		this.mUnitVectors[2].rotateVector(zm);
 
 	//	this.setSquares();
+		//calculateNomalVector();
 	}
 	@Override
     public int compareTo (Cube other){

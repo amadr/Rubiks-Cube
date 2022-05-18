@@ -10,22 +10,20 @@ import javax.swing.JComponent;
  */
 
 public class RubikComp extends JComponent implements Runnable {
-	//private RubiksCube mCube;
+	private RubiksCube mRubiksCube;
 	private Cube mCube;
-	private Vector3D mVector1 = new Vector3D(5,5,5);
-	private Vector3D mVector2 = new Vector3D(100,5,5);
-	private Vector3D mVector3 = new Vector3D(100,100,5);
-	private Vector3D mVector4 = new Vector3D(5,100,5);
 	private Perspective mPerspective;
 	private RotMatrix mRotMatrix;
 	
     private Boolean rotate = true;
 	
 	public RubikComp() {		
-		mCube = new Cube(new Vector3D(400, 400, 100));
+		mCube = new Cube(new Vector3D(0, 0, 100));
+		
+		mRubiksCube = new RubiksCube();
 		
 		mPerspective = new Perspective();
-    	setPreferredSize (new Dimension (800, 800));
+    	setPreferredSize (new Dimension (1000, 800));
     	Thread th = new Thread (this);
         th.start ();
     }
@@ -40,10 +38,14 @@ public class RubikComp extends JComponent implements Runnable {
 		int h = getHeight();
 
         if(rotate) {
-            mCube.rotateCube();
+            //mCube.rotateCube();
             //rotate = false;
+        	
+        	mRubiksCube.rotateCube();
         }
-        mPerspective.paintCube(g2, mCube);
+        //mPerspective.paintCube(g2, mCube);
+        
+        mPerspective.paintRubiksCube(g2, mRubiksCube);
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class RubikComp extends JComponent implements Runnable {
 			repaint();
 			
 			try { 
-					Thread.sleep(80); // time to sleep -> 10?
+					Thread.sleep(10); // time to sleep -> 10?
 				} 
 			catch (InterruptedException e) {}
         }
