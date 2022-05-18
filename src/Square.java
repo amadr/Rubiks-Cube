@@ -1,10 +1,8 @@
+import java.awt.Color;
+
 /**
  * 
  */
-
-enum Color {
-	RED, GREEN, BLUE, ORANGE, YELLOW, WHITE
-}
 
 public class Square {
 
@@ -14,12 +12,13 @@ public class Square {
 
 	private Color mColor;
 
-	public Square(Vector3D ul, Vector3D ur, Vector3D lr, Vector3D ll, Vector3D nv) {
+	public Square(Vector3D ul, Vector3D ur, Vector3D lr, Vector3D ll, Vector3D nv, Color c) {
 		this.mEdges[0] = ul;
 		this.mEdges[1] = ur;
 		this.mEdges[2] = lr;
 		this.mEdges[3] = ll;
-		this.mNormalVector = nv;				
+		this.mNormalVector = nv;
+		this.mColor = c;
 	}
 
 	public void setEdges(Vector3D[] e) {

@@ -19,8 +19,8 @@ public class Perspective {
 	private int a = 0;
 	
 	public Perspective() {
-		mXoffset = 0;
-		mYoffset = 0;
+		mXoffset = 400;
+		mYoffset = 400;
 		mScale = 1;
 		mColor = new Color[6];
 		mColor[0] = Color.GREEN;
@@ -56,48 +56,64 @@ public class Perspective {
 
 		path.moveTo(sq.getEdges()[0].getX() * 200, sq.getEdges()[0].getY() * 200);
 		for (int i = 0; i < sq.getEdges().length; i++) {		// i = 0 for Polygon
-			//parallel_projection(sq.getEdges()[i]);
-			x[i] = (int) sq.getEdges()[i].getX();
-			y[i] = (int) sq.getEdges()[i].getY();
+			x[i] = (int) sq.getEdges()[i].getX() + (int) mXoffset;
+			y[i] = (int) sq.getEdges()[i].getY() + (int) mYoffset;
 			
-			path.lineTo(sq.getEdges()[i].getX() * 200, sq.getEdges()[i].getY() * 200);
-			
-//			System.out.println( "x: " + x[i] + ", y: " + y[i]);
-	       
+			path.lineTo(sq.getEdges()[i].getX() * 200, sq.getEdges()[i].getY() * 200);	       
 		}
 
         Shape myVectorShape = new Polygon(x, y, 4);
+        //Shape myVectorShape = new Polygon(getParallelX(sq), getParallelY(sq), 4);
         
-        g2.setColor(mColor[a%3]);
-        System.out.println( "a%6: " + a%6); 
-        Stroke stroke = new BasicStroke((float) 5.0);
+        Stroke stroke = new BasicStroke((float) 3.0);
         g2.setStroke(stroke);
         
         path.closePath();
         //g2.draw(path);
-        //g2.draw(myVectorShape);
         g2.fill(myVectorShape);
+        g2.setColor(Color.BLACK);
+        g2.draw(myVectorShape);
 	}
 	
 	public void paintCube(Graphics2D g2, Cube cb) {
 		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 2; j++)
-				if (cb.mArea[i][j].getNomalVecZ() > 0 ) {	//normalvektor nicht richtig?
+				//if (cb.mNormalVectors[i][j].getZ() < 0) {	//normalvektor nicht richtig?
+				if (cb.mArea[i][j].getNomalVecZ() < 0) {	//normalvektor nicht richtig?
+					g2.setColor(cb.mArea[i][j].getColor());
 					paintSquare(g2, cb.mArea[i][j]);
 				}
 		}
 	}
 	
-	public void paintRubiksCube(Graphics2D g2/*, RubiksCube rc*/) {
-		
+	public void paintRubiksCube(Graphics2D g2, RubiksCube rc) {
+		for (int i = 0; i < rc.getCubeList().size(); i++) {
+			paintCube(g2, rc.getCubeList().get(i));
+		}
 	}
 	
-	private void parallel_projection(Vector3D vec) {
-		int distance = 1;
-		System.out.println("Z: " + vec.getZ());
-		double projectionConst = (1 / distance - vec.getZ()/100 );
-		vec.setX(projectionConst * vec.getX());
-		vec.setY(projectionConst * vec.getY());		
+	private int [] getParallelX(Square sq) {
+		int distance = 100;
+
+		int[] x = new int[4];
+		
+		for (int i = 0; i < sq.getEdges().length; i++) {
+			int projectionConst = (1 / distance - (int)sq.getEdges()[i].getZ());
+			x[i] = (int) sq.getEdges()[i].getX() / projectionConst + (int) mXoffset;
+		}
+		return x;
+	}
+	
+	private int [] getParallelY(Square sq) {
+		int distance = 100;
+
+		int[] y = new int[4];
+		
+		for (int i = 0; i < sq.getEdges().length; i++) {
+			int projectionConst = (1 / distance - (int)sq.getEdges()[i].getZ());
+			y[i] = (int) sq.getEdges()[i].getY() / projectionConst;
+		}
+		return y;
 	}
 }
