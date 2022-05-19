@@ -12,24 +12,13 @@ import java.awt.geom.Path2D;
  */
 
 public class Perspective {
+	
 	private double mXoffset, mYoffset, mScale;
-	
-	private Color mColor[];
-	
-	private int a = 0;
 	
 	public Perspective() {
 		mXoffset = 400;
 		mYoffset = 400;
 		mScale = 1;
-		mColor = new Color[6];
-		mColor[0] = Color.GREEN;
-		mColor[1] = Color.RED;
-		mColor[2] = Color.YELLOW;
-		mColor[3] = Color.BLUE;
-		mColor[4] = Color.ORANGE;
-		mColor[5] = Color.BLACK;	//change it later to WHITE
-
 	}
 	
 	public void setXOffset(double x) {
@@ -51,8 +40,6 @@ public class Perspective {
 		
 		Path2D path = new Path2D.Double();
 		//sq.getEdges()[0].normalizeVector();
-		
-		a++;
 
 		path.moveTo(sq.getEdges()[0].getX() * 200, sq.getEdges()[0].getY() * 200);
 		for (int i = 0; i < sq.getEdges().length; i++) {		// i = 0 for Polygon
@@ -76,11 +63,9 @@ public class Perspective {
 	}
 	
 	public void paintCube(Graphics2D g2, Cube cb) {
-		
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 2; j++)
-				//if (cb.mNormalVectors[i][j].getZ() < 0) {	//normalvektor nicht richtig?
-				if (cb.mArea[i][j].getNomalVecZ() < 0) {	//normalvektor nicht richtig?
+				if (cb.mArea[i][j].getNomalVecZ() < 0) {
 					g2.setColor(cb.mArea[i][j].getColor());
 					paintSquare(g2, cb.mArea[i][j]);
 				}
