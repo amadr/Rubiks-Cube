@@ -1,19 +1,16 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
 
 public class RubiksCube {
 
 	private ArrayList<Cube> mCubeList = new ArrayList<Cube>();
 	private ArrayList<Cube> mCubeCopyList = new ArrayList<Cube>();
+		
+	private Boolean mRotation = false;
+	int mRotationCounter = 0;
 	
 	private Boolean rotated = false;
-	
-	int a = 0;
-	
-	
+  
 	public RubiksCube() {
 		for (int i = -150; i <= 150; i+=150) {
 			for (int j = -150; j <= 150; j+=150) {
@@ -40,49 +37,97 @@ public class RubiksCube {
 		}
 	}
 	
-	public void rotateCube() {
-//		RotMatrix xm = new RotMatrix();
-//		RotMatrix ym = new RotMatrix();
-//		RotMatrix zm = new RotMatrix();
-//		xm = RotMatrix.xRotMatrix(Math.PI/300);
-//		ym = RotMatrix.yRotMatrix(Math.PI/300);
-//		zm = RotMatrix.zRotMatrix(Math.PI/300);
+	public void startRotation() {
+		mRotation = true;
+		//Collections.sort(mCubeCopyList);
+	}
 
+	public void rotateCube() {
 		for(int i = 0; i < mCubeList.size(); i++) {
 			mCubeList.get(i).rotateCube();
 		}
 	}
 	
+	/*
+	 * Gibt es probleme wenn der user auf einmal mehrer eingaben tätigt zu rotation?
+	 * daa alle gleiche zählvariable benutzen
+	 */
 	public void rotatePosX() {
+		copyCubeList();
+		Collections.sort(mCubeCopyList);
 		RotMatrix xm = new RotMatrix();
 		
 		final double phi = Math.PI/360;
-		a++;
-//		if (!rotated || true)
-		if(a<360)
+		mRotationCounter++;
+		if(mRotation && mRotationCounter <= 180)
 		{
-		//for (double i = 0; i < 360; i++) {
 			xm = RotMatrix.xRotMatrix(phi);
-			//sleep(1);
 			for(int j = 0; j < mCubeList.size(); j++) {
-				mCubeList.get(j).rotateCube(xm);
+				mCubeCopyList.get(j).rotateCube(xm);
 			}
-			//sleep(1);
-			//System.out.println("rotate" + i);
-			}
-		//}
-		rotated = true;
+		}
+		else {
+			mRotation = false;
+			mRotationCounter = 0;
+		}
 	}
 	
-	public static void sleep(int ms)
-	{
-	    try
-	    {
-	        Thread.sleep(ms);
-	    }
-	    catch(InterruptedException ex)
-	    {
-	        Thread.currentThread().interrupt();
-	    }
+	public void rotatePosY() {
+		copyCubeList();
+		//Collections.sort(mCubeCopyList);
+		RotMatrix ym = new RotMatrix();
+		
+		final double phi = Math.PI/360;
+		mRotationCounter++;
+		if (mRotation && mRotationCounter <= 180)
+		{
+			ym = RotMatrix.yRotMatrix(phi);
+			for(int j = 0; j < mCubeList.size(); j++) {
+				if (mCubeCopyList.get(j).getMid().getZ() < 0 || true) {
+					mCubeCopyList.get(j).rotateCube(ym);
+
+				}
+			}
+			}
+		else {
+			mRotation = false;
+			mRotationCounter = 0;
+		}
 	}
+	
+	public void rotatePosZ() {
+		copyCubeList();
+		//Collections.sort(mCubeCopyList);
+		RotMatrix zm = new RotMatrix();
+		
+		final double phi = Math.PI/360;
+		mRotationCounter++;
+		if(mRotation && mRotationCounter <= 180)
+		{
+			zm = RotMatrix.zRotMatrix(phi);
+			for(int j = 0; j < mCubeList.size(); j++) {
+				if (mCubeCopyList.get(j).getMid().getZ() > 0) {
+				mCubeCopyList.get(j).rotateCube(zm);
+				}
+			}
+
+			}
+		else {
+			mRotation = false;
+			mRotationCounter = 0;
+		}
+	}
+	
+//	public static void sleep(int ms)
+//	{
+//	    try
+//	    {
+//	        Thread.sleep(ms);
+//	    }
+//	    catch(InterruptedException ex)
+//	    {
+//	        Thread.currentThread().interrupt();
+//	    }
+//	}
+
 }

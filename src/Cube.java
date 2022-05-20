@@ -8,6 +8,7 @@ public class Cube implements Comparable<Cube> {
 	private double edgeLength;
 	
 	private Vector3D mToMid;
+
 	// unit/ normal vectors
 	public Vector3D[] mUnitVectors   = new Vector3D[6];
 	
@@ -21,7 +22,8 @@ public class Cube implements Comparable<Cube> {
 	}
 	
 	public Cube (Vector3D toMid) {	
-		this.edgeLength = 100;	
+    this.edgeLength = 135;	
+
 		this.mToMid = toMid; // Vector mit Ausrichtung auf Mittelpunkt (0,0,0)
 		this.mUnitVectors[0] = new Vector3D(1,0,0);	
 		this.mUnitVectors[1] = new Vector3D(0,1,0);
@@ -56,7 +58,7 @@ public class Cube implements Comparable<Cube> {
 		llf.subtractVector( this.mUnitVectors[2].getScaledVector(0.5*this.edgeLength));
 		this.mEdges[0][1][0] = llf;
 		
-		Vector3D lrf= new Vector3D();												// claculate upper right corner
+		Vector3D lrf= new Vector3D();
 		lrf.copyVector(toMid);
 		lrf.addVector(this.mUnitVectors[0].getScaledVector(0.5*this.edgeLength));
 		lrf.addVector(this.mUnitVectors[1].getScaledVector(0.5*this.edgeLength));
@@ -120,7 +122,8 @@ public void setSquares() {
 		return this.mToMid;
 	}
 	
-	public Vector3D [][][] getEdges(){	
+	public Vector3D [][][] getEdges(){											//TODO erstellung evt. in Konstruktor	
+
 		return this.mEdges;		
 	}
 	
@@ -168,12 +171,11 @@ public void setSquares() {
 	
 	@Override
     public int compareTo (Cube other){
-        
-		if (this.mToMid.getZ()<other.mToMid.getZ()) {
-			return -1; 
+  		if (this.mToMid.getZ() < other.mToMid.getZ()) {
+			return 1; 
 		} 
-		else if (this.mToMid.getZ()>other.mToMid.getZ()) {
-			return 1 ; 
+		else if (this.mToMid.getZ() > other.mToMid.getZ()) {
+			return -1 ; 
 		} 
 		else {
 			return 0 ; 
@@ -194,3 +196,4 @@ public void setSquares() {
 		}
 	}
 }
+

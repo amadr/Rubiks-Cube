@@ -23,7 +23,6 @@ public class RubikComp extends JComponent implements Runnable {
 		
 		mRubiksCube.copyCubeList();
 		
-		
 		mPerspective = new Perspective();
     	setPreferredSize (new Dimension (1000, 800));
     	Thread th = new Thread (this);
@@ -43,16 +42,12 @@ public class RubikComp extends JComponent implements Runnable {
         mPerspective.paintRubiksCube(g2, mRubiksCube);
         
         if(rotate) {
-            //mCube.rotateCube();
-        	//mRubiksCube.rotateCube();
-//        	for (double i = 0; i < 360; i++) {
-//        		mRubiksCube.rotatePosX();
-//        		System.out.println("rotate" + i);
-//        		//repaint();
-//        	}
-        	mRubiksCube.rotatePosX();
-            //rotate = false;
+        	mRubiksCube.startRotation();
+        	
+            rotate = false;
         }
+    	mRubiksCube.rotatePosZ();
+
 	}
 
 	@Override
