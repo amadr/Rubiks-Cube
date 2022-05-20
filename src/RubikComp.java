@@ -23,7 +23,6 @@ public class RubikComp extends JComponent implements Runnable {
 		
 		mRubiksCube.copyCubeList();
 		
-		
 		mPerspective = new Perspective();
     	setPreferredSize (new Dimension (1000, 800));
     	Thread th = new Thread (this);
