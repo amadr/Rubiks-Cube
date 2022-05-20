@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.Stroke;
-import java.awt.geom.Path2D;
+import java.awt.geom.AffineTransform;
 
 /**
  * The calculation from 3D to 2D is done here. Also the paint methods for a
@@ -38,28 +38,24 @@ public class Perspective {
 		int[] x = new int[4];
 		int[] y = new int[4];
 		
-		Path2D path = new Path2D.Double();
 		//sq.getEdges()[0].normalizeVector();
 
-		path.moveTo(sq.getEdges()[0].getX() * 200, sq.getEdges()[0].getY() * 200);
 		for (int i = 0; i < sq.getEdges().length; i++) {		// i = 0 for Polygon
 			x[i] = (int) sq.getEdges()[i].getX() + (int) mXoffset;
 			y[i] = (int) sq.getEdges()[i].getY() + (int) mYoffset;
 			
-			path.lineTo(sq.getEdges()[i].getX() * 200, sq.getEdges()[i].getY() * 200);	       
 		}
 
         Shape myVectorShape = new Polygon(x, y, 4);
-        //Shape myVectorShape = new Polygon(getParallelX(sq), getParallelY(sq), 4);
         
         Stroke stroke = new BasicStroke((float) 3.0);
         g2.setStroke(stroke);
         
-        path.closePath();
         //g2.draw(path);
         g2.fill(myVectorShape);
         g2.setColor(Color.BLACK);
         g2.draw(myVectorShape);
+        
 	}
 	
 	public void paintCube(Graphics2D g2, Cube cb) {

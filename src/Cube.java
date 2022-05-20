@@ -21,7 +21,7 @@ public class Cube implements Comparable<Cube> {
 	}
 	
 	public Cube (Vector3D toMid) {	
-		this.edgeLength = 100;	
+		this.edgeLength = 135;	
 		this.mToMid = toMid; // Vector mit Ausrichtung auf Mittelpunkt (0,0,0)
 		this.mUnitVectors[0] = new Vector3D(1,0,0);	
 		this.mUnitVectors[1] = new Vector3D(0,1,0);
@@ -169,11 +169,11 @@ public void setSquares() {
 	@Override
     public int compareTo (Cube other){
         
-		if (this.mToMid.getZ()<other.mToMid.getZ()) {
-			return -1; 
+		if (this.mToMid.getZ() < other.mToMid.getZ()) {
+			return 1; 
 		} 
-		else if (this.mToMid.getZ()>other.mToMid.getZ()) {
-			return 1 ; 
+		else if (this.mToMid.getZ() > other.mToMid.getZ()) {
+			return -1 ; 
 		} 
 		else {
 			return 0 ; 
