@@ -9,7 +9,8 @@ public class RubiksCube {
 	private Boolean mRotation = false;
 	int mRotationCounter = 0;
 	
-	
+	private Boolean rotated = false;
+  
 	public RubiksCube() {
 		for (int i = -150; i <= 150; i+=150) {
 			for (int j = -150; j <= 150; j+=150) {
@@ -40,7 +41,7 @@ public class RubiksCube {
 		mRotation = true;
 		//Collections.sort(mCubeCopyList);
 	}
-	
+
 	public void rotateCube() {
 		for(int i = 0; i < mCubeList.size(); i++) {
 			mCubeList.get(i).rotateCube();
@@ -128,4 +129,5 @@ public class RubiksCube {
 //	        Thread.currentThread().interrupt();
 //	    }
 //	}
+
 }

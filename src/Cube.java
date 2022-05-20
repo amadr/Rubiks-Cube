@@ -22,7 +22,8 @@ public class Cube implements Comparable<Cube> {
 	}
 	
 	public Cube (Vector3D toMid) {	
-		this.edgeLength = 135;	
+    this.edgeLength = 135;	
+
 		this.mToMid = toMid; // Vector mit Ausrichtung auf Mittelpunkt (0,0,0)
 		this.mUnitVectors[0] = new Vector3D(1,0,0);	
 		this.mUnitVectors[1] = new Vector3D(0,1,0);
@@ -121,8 +122,8 @@ public void setSquares() {
 		return this.mToMid;
 	}
 	
-
 	public Vector3D [][][] getEdges(){											//TODO erstellung evt. in Konstruktor	
+
 		return this.mEdges;		
 	}
 	
@@ -194,5 +195,5 @@ public void setSquares() {
 			mUnitVectors[i].rotateVector(rm);
 		}
 	}
-
 }
+
