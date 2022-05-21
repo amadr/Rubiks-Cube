@@ -2,6 +2,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
@@ -40,7 +41,7 @@ public class Perspective {
 		
 		//sq.getEdges()[0].normalizeVector();
 
-		for (int i = 0; i < sq.getEdges().length; i++) {		// i = 0 for Polygon
+		for (int i = 0; i < sq.getEdges().length; i++) {
 			x[i] = (int) sq.getEdges()[i].getX() + (int) mXoffset;
 			y[i] = (int) sq.getEdges()[i].getY() + (int) mYoffset;
 			
@@ -69,8 +70,12 @@ public class Perspective {
 	}
 	
 	public void paintRubiksCube(Graphics2D g2, RubiksCube rc) {
+		rc.sort();
 		for (int i = 0; i < rc.getCubeList().size(); i++) {
 			paintCube(g2, rc.getCubeList().get(i));
+//			Shape myShape = new Rectangle((int) rc.getCubeList().get(i).getMid().getX(), (int) rc.getCubeList().get(i).getMid().getY());
+//			g2.setColor(Color.BLACK);
+//		    g2.draw(myShape);	
 		}
 	}
 	

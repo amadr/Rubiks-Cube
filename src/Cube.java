@@ -136,26 +136,34 @@ public void setSquares() {
 	}
 	
 	public void copyCube(Cube other) {
-		this.mToMid = other.mToMid;
+		this.mToMid.copyVector(mToMid);
 		for (int i = 0; i < mUnitVectors.length; i++) {
-			this.mUnitVectors[i] = other.mUnitVectors[i];
+			this.mUnitVectors[i].copyVector(other.mUnitVectors[i]);
+			//this.mUnitVectors[i] = other.mUnitVectors[i];
 		}
-		this.edgeLength = other.edgeLength;
+		for(int i = 0; i < 2; i++) {
+			for(int j = 0; j < 2; j++) {
+				for(int k = 0; k < 2; k++) {
+					this.mEdges[i][j][k].copyVector(other.mEdges[i][j][k]);
+				}
+			}
+		}
+		//this.edgeLength = other.edgeLength;
 	}
 	
 	public void rotateCube() {
 		RotMatrix xm = new RotMatrix();
 		RotMatrix ym = new RotMatrix();
 		RotMatrix zm = new RotMatrix();
-		xm = RotMatrix.xRotMatrix(Math.PI/300);
-		ym = RotMatrix.yRotMatrix(Math.PI/300);
-		zm = RotMatrix.zRotMatrix(Math.PI/300);
+		xm = RotMatrix.xRotMatrix(-Math.PI/4);
+		ym = RotMatrix.yRotMatrix(-Math.PI/4);
+		zm = RotMatrix.zRotMatrix(-Math.PI/4);
 		
 		for(int i = 0; i < 2; i++) {
 			for(int j = 0; j < 2; j++) {
 				for(int k = 0; k < 2; k++) {
-					mEdges[i][j][k].rotateVector(xm);								
-//					mEdges[i][j][k].rotateVector(ym);
+//					mEdges[i][j][k].rotateVector(xm);								
+					mEdges[i][j][k].rotateVector(ym);
 //					mEdges[i][j][k].rotateVector(zm);	
 
 				}
@@ -163,8 +171,8 @@ public void setSquares() {
 		}
 	
 		for (int i = 0; i < mUnitVectors.length; i++) {
-			mUnitVectors[i].rotateVector(xm);
-//			mUnitVectors[i].rotateVector(ym);
+//			mUnitVectors[i].rotateVector(xm);
+			mUnitVectors[i].rotateVector(ym);
 //			mUnitVectors[i].rotateVector(zm);
 		}
 	}
@@ -175,10 +183,10 @@ public void setSquares() {
 			return 1; 
 		} 
 		else if (this.mToMid.getZ() > other.mToMid.getZ()) {
-			return -1 ; 
+			return -1; 
 		} 
 		else {
-			return 0 ; 
+			return 0; 
 		}
     }	
 	
@@ -187,9 +195,12 @@ public void setSquares() {
 			for(int j = 0; j < 2; j++) {
 				for(int k = 0; k < 2; k++) {
 					mEdges[i][j][k].rotateVector(rm);
+					//System.out.println(" DAVOR: x: " + this.mToMid.getX() + ", y: " + this.mToMid.getY() + ",z: " + this.mToMid.getZ());
+					//System.out.println("DANACH: x: " + this.mToMid.getX() + ", y: " + this.mToMid.getY() + ",z: " + this.mToMid.getZ());
 				}
 			}
 		}
+		this.mToMid.rotateVector(rm);
 	
 		for (int i = 0; i < mUnitVectors.length; i++) {
 			mUnitVectors[i].rotateVector(rm);
