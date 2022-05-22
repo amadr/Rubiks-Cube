@@ -166,8 +166,8 @@ public void setSquares() {
 						//System.out.println(" DAVOR: x: " + mEdges[0][0][0].getX() + ", y: " + mEdges[0][0][0].getY() + ",z: " + mEdges[0][0][0].getZ());
 					}
 //					mEdges[i][j][k].rotateVector(xm);								
-					mEdges[i][j][k].rotateVector(ym);
-					mEdges[i][j][k].rotateVector(zm);
+					mEdges[i][j][k].rotatePerspective(ym);
+					mEdges[i][j][k].rotatePerspective(zm);
 					
 					if(k == 0 && j == 0 && i == 0) {
 						//System.out.println("DANACH: x: " + mEdges[0][0][0].getX() + ", y: " + mEdges[0][0][0].getY() + ",z: " + mEdges[0][0][0].getZ());
@@ -178,8 +178,8 @@ public void setSquares() {
 	
 		for (int i = 0; i < mUnitVectors.length; i++) {
 //			mUnitVectors[i].rotateVector(xm);
-			mUnitVectors[i].rotateVector(ym);
-			mUnitVectors[i].rotateVector(zm);
+			mUnitVectors[i].rotatePerspective(ym);
+			mUnitVectors[i].rotatePerspective(zm);
 		}
 	}
 	

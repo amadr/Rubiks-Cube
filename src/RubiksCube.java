@@ -33,11 +33,11 @@ public class RubiksCube {
 	}
 	
 	public void copyCubeList() {
-//		Collections.sort(mCubeList);
-//		for (int i = 0; i < mCubeList.size(); i++) {
-//			mCubeCopyList.get(i).copyCube(mCubeList.get(i));
-//		}
-//		rotate();
+		Collections.sort(mCubeList);
+		for (int i = 0; i < mCubeList.size(); i++) {
+			mCubeCopyList.get(i).copyCube(mCubeList.get(i));
+		}
+		rotate_();
 	}
 	
 //	public void startRotation() {
@@ -47,8 +47,13 @@ public class RubiksCube {
 //	}
 	
 	public void sort() {
+		for(int i = 0; i < mCubeList.size(); i++) {
+			System.out.println(i + " : " + mCubeList.get(i).getMid().getZ());
+		}
 		Collections.sort(mCubeList);
-		System.out.println("SORT");
+		for(int i = 0; i < mCubeList.size(); i++) {
+			System.out.println(i + " : " + mCubeList.get(i).getMid().getZ());
+		}
 	}
 	
 	public void reset() {

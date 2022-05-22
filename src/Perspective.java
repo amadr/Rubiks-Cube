@@ -68,10 +68,10 @@ public class Perspective {
 	}
 	
 	public void paintRubiksCube(Graphics2D g2, RubiksCube rc) {
-		rc.sort();
-		//rc.copyCubeList();
+		//rc.sort();
+		rc.copyCubeList();
 		for (int i = 0; i < rc.getCubeList().size(); i++) {
-			paintCube(g2, rc.getCubeList().get(i));	
+			paintCube(g2, rc.getCubeCopyList().get(i));	
 		}
 	}
 	

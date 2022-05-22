@@ -56,7 +56,7 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
         mPerspective.paintRubiksCube(g2, mRubiksCube);
 
     	if(rotate_) {
-        	//mRubiksCube.rotate_();
+        	mRubiksCube.rotate_();
         	
             rotate_ = false;
         }
