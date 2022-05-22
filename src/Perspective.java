@@ -35,12 +35,9 @@ public class Perspective {
 	}
 	
 	public void paintSquare(Graphics2D g2, Square sq) {
-		
 		int[] x = new int[4];
 		int[] y = new int[4];
 		
-		//sq.getEdges()[0].normalizeVector();
-
 		for (int i = 0; i < sq.getEdges().length; i++) {
 			x[i] = (int) sq.getEdges()[i].getX() + (int) mXoffset;
 			y[i] = (int) sq.getEdges()[i].getY() + (int) mYoffset;
@@ -52,7 +49,6 @@ public class Perspective {
         Stroke stroke = new BasicStroke((float) 3.0);
         g2.setStroke(stroke);
         
-        //g2.draw(path);
         g2.fill(myVectorShape);
         g2.setColor(Color.BLACK);
         g2.draw(myVectorShape);
@@ -61,45 +57,45 @@ public class Perspective {
 	
 	public void paintCube(Graphics2D g2, Cube cb) {
 		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 2; j++)
-				if (cb.mArea[i][j].getNomalVecZ() < 0) {
+			for (int j = 0; j < 2; j++) {
+				if (cb.mArea[i][j].getNomalVecZ() < 0) 
+				{
 					g2.setColor(cb.mArea[i][j].getColor());
 					paintSquare(g2, cb.mArea[i][j]);
 				}
+			}
 		}
 	}
 	
 	public void paintRubiksCube(Graphics2D g2, RubiksCube rc) {
-		rc.sort();
+		//rc.sort();
+		rc.copyCubeList();
 		for (int i = 0; i < rc.getCubeList().size(); i++) {
-			paintCube(g2, rc.getCubeList().get(i));
-//			Shape myShape = new Rectangle((int) rc.getCubeList().get(i).getMid().getX(), (int) rc.getCubeList().get(i).getMid().getY());
-//			g2.setColor(Color.BLACK);
-//		    g2.draw(myShape);	
+			paintCube(g2, rc.getCubeCopyList().get(i));	
 		}
 	}
 	
-	private int [] getParallelX(Square sq) {
-		int distance = 100;
-
-		int[] x = new int[4];
-		
-		for (int i = 0; i < sq.getEdges().length; i++) {
-			int projectionConst = (1 / distance - (int)sq.getEdges()[i].getZ());
-			x[i] = (int) sq.getEdges()[i].getX() / projectionConst + (int) mXoffset;
-		}
-		return x;
-	}
-	
-	private int [] getParallelY(Square sq) {
-		int distance = 100;
-
-		int[] y = new int[4];
-		
-		for (int i = 0; i < sq.getEdges().length; i++) {
-			int projectionConst = (1 / distance - (int)sq.getEdges()[i].getZ());
-			y[i] = (int) sq.getEdges()[i].getY() / projectionConst;
-		}
-		return y;
-	}
+//	private int [] getParallelX(Square sq) {
+//		int distance = 100;
+//
+//		int[] x = new int[4];
+//		
+//		for (int i = 0; i < sq.getEdges().length; i++) {
+//			int projectionConst = (1 / distance - (int)sq.getEdges()[i].getZ());
+//			x[i] = (int) sq.getEdges()[i].getX() / projectionConst + (int) mXoffset;
+//		}
+//		return x;
+//	}
+//	
+//	private int [] getParallelY(Square sq) {
+//		int distance = 100;
+//
+//		int[] y = new int[4];
+//		
+//		for (int i = 0; i < sq.getEdges().length; i++) {
+//			int projectionConst = (1 / distance - (int)sq.getEdges()[i].getZ());
+//			y[i] = (int) sq.getEdges()[i].getY() / projectionConst;
+//		}
+//		return y;
+//	}
 }

@@ -136,7 +136,7 @@ public void setSquares() {
 	}
 	
 	public void copyCube(Cube other) {
-		this.mToMid.copyVector(mToMid);
+		this.mToMid.copyVector(other.mToMid);
 		for (int i = 0; i < mUnitVectors.length; i++) {
 			this.mUnitVectors[i].copyVector(other.mUnitVectors[i]);
 			//this.mUnitVectors[i] = other.mUnitVectors[i];
@@ -155,25 +155,31 @@ public void setSquares() {
 		RotMatrix xm = new RotMatrix();
 		RotMatrix ym = new RotMatrix();
 		RotMatrix zm = new RotMatrix();
-		xm = RotMatrix.xRotMatrix(-Math.PI/4);
-		ym = RotMatrix.yRotMatrix(-Math.PI/4);
-		zm = RotMatrix.zRotMatrix(-Math.PI/4);
+		xm = RotMatrix.xRotMatrix(Math.PI/30);
+		ym = RotMatrix.yRotMatrix(Math.PI/30);
+		zm = RotMatrix.zRotMatrix(Math.PI/30);
 		
 		for(int i = 0; i < 2; i++) {
 			for(int j = 0; j < 2; j++) {
 				for(int k = 0; k < 2; k++) {
+					if(k == 0 && j == 0 && i == 0) {
+						//System.out.println(" DAVOR: x: " + mEdges[0][0][0].getX() + ", y: " + mEdges[0][0][0].getY() + ",z: " + mEdges[0][0][0].getZ());
+					}
 //					mEdges[i][j][k].rotateVector(xm);								
-					mEdges[i][j][k].rotateVector(ym);
-//					mEdges[i][j][k].rotateVector(zm);	
-
+					mEdges[i][j][k].rotatePerspective(ym);
+					mEdges[i][j][k].rotatePerspective(zm);
+					
+					if(k == 0 && j == 0 && i == 0) {
+						//System.out.println("DANACH: x: " + mEdges[0][0][0].getX() + ", y: " + mEdges[0][0][0].getY() + ",z: " + mEdges[0][0][0].getZ());
+					}
 				}
 			}
 		}
 	
 		for (int i = 0; i < mUnitVectors.length; i++) {
 //			mUnitVectors[i].rotateVector(xm);
-			mUnitVectors[i].rotateVector(ym);
-//			mUnitVectors[i].rotateVector(zm);
+			mUnitVectors[i].rotatePerspective(ym);
+			mUnitVectors[i].rotatePerspective(zm);
 		}
 	}
 	

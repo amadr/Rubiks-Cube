@@ -41,7 +41,7 @@ public class Vector3D {
 	}
 
 	public void setZ(double z) {
-		mVector[0] = z;
+		mVector[2] = z;
 	}
 
 	public double getLength() {
@@ -97,6 +97,22 @@ public class Vector3D {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				result[i] += (int) (mVector[j] * rotMatrix.mRotMatrix[i][j]);
+				//result[i] += (int) (mVector[j] * rotMatrix.mRotMatrix[i][j]);
+			}
+		}
+		mVector[0] = result[0];
+		mVector[1] = result[1];
+		mVector[2] = result[2];
+	}
+	
+	public void rotatePerspective(RotMatrix rotMatrix) {
+		int row = rotMatrix.mRotMatrix.length, col = rotMatrix.mRotMatrix[0].length;
+		double[] result = {0, 0, 0};
+		
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				result[i] += (mVector[j] * rotMatrix.mRotMatrix[i][j]);
+				//result[i] += (int) (mVector[j] * rotMatrix.mRotMatrix[i][j]);
 			}
 		}
 		mVector[0] = result[0];
