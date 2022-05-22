@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.AffineTransform;
 
 import javax.swing.JComponent;
 
@@ -24,9 +25,7 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
 		//mCube = new Cube(new Vector3D(0, 0, 100));
 		
 		mRubiksCube = new RubiksCube();
-		
-		mRubiksCube.copyCubeList();
-		
+				
 		mPerspective = new Perspective();
     	setPreferredSize (new Dimension (1000, 800));
     	addKeyListener(this);
@@ -44,22 +43,31 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
 		int h = getHeight();
         
         //mPerspective.paintCube(g2, mCube);
-        mPerspective.paintRubiksCube(g2, mRubiksCube);
     	
-//    	if(rotate_) {
-//        	mRubiksCube.rotate();
-//        	
-//            rotate_ = false;
-//        }
+		//mRubiksCube.rotate_();
+		
+
+        //AffineTransform at = new AffineTransform();
+        //at.rotate(Math.PI/8);
+        //at.rotate(Math.PI/8, 100, 100);
+        
+        //g2.setTransform(at);
+        
+        mPerspective.paintRubiksCube(g2, mRubiksCube);
+
+    	if(rotate_) {
+        	//mRubiksCube.rotate_();
+        	
+            rotate_ = false;
+        }
 //    	
 //        if(rotate) {
 //        	mRubiksCube.startRotation();
 //        	
 //            //rotate = false;
 //        }
-//    	mRubiksCube.rotatePosX();
-
-
+    	//mRubiksCube.rotatePosX();
+    	
 	}
 
 	@Override
@@ -68,7 +76,7 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
 			repaint();
 
 			try {
-				Thread.sleep(10);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 			}
 		}

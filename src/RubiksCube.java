@@ -33,9 +33,11 @@ public class RubiksCube {
 	}
 	
 	public void copyCubeList() {
-		for (int i = 0; i < mCubeList.size(); i++) {
-			mCubeCopyList.get(i).copyCube(mCubeList.get(i));
-		}
+//		Collections.sort(mCubeList);
+//		for (int i = 0; i < mCubeList.size(); i++) {
+//			mCubeCopyList.get(i).copyCube(mCubeList.get(i));
+//		}
+//		rotate();
 	}
 	
 //	public void startRotation() {
@@ -46,24 +48,36 @@ public class RubiksCube {
 	
 	public void sort() {
 		Collections.sort(mCubeList);
+		System.out.println("SORT");
 	}
 	
-	// not working properly yet
 	public void reset() {
-		for (int i = 0; i < mCubeList.size(); i++) {
-			mCubeList.get(i).copyCube(mCubeCopyList.get(i));
+		mCubeList.removeAll(mCubeList);
+		for (int i = -150; i <= 150; i+=150) {
+			for (int j = -150; j <= 150; j+=150) {
+				for (int k = -150; k <= 150; k+=150) {
+					Cube cb = new Cube(new Vector3D(i, j, k));
+					mCubeList.add(cb);
+				}
+			}
 		}
 	}
 
-	public void rotateCube() {
-		for(int i = 0; i < mCubeList.size(); i++) {
-			mCubeList.get(i).rotateCube();
-		}
-	}
+//	public void rotateCube() {
+//		for(int i = 0; i < mCubeList.size(); i++) {
+//			mCubeList.get(i).rotateCube();
+//		}
+//	}
 	
 	public void rotate() {
 		for(int i = 0; i < mCubeList.size(); i++) {
-			mCubeList.get(i).rotateCube();
+			mCubeCopyList.get(i).rotateCube();
+		}
+	}
+	
+	public void rotate_() {
+		for(int i = 0; i < mCubeList.size(); i++) {
+			mCubeCopyList.get(i).rotateCube();
 		}
 	}
 	
@@ -74,6 +88,7 @@ public class RubiksCube {
 				mCubeList.get(j).rotateCube(xRot);
 			}
 		}
+		copyCubeList();
 	}
 
 	public void rotateMiddleX(int dir) {
@@ -83,6 +98,7 @@ public class RubiksCube {
 				mCubeList.get(j).rotateCube(xRot);
 			}
 		}
+		copyCubeList();
 	}
 	
 	public void rotateRightX(int dir) {
@@ -92,6 +108,7 @@ public class RubiksCube {
 				mCubeList.get(j).rotateCube(xRot);
 			}
 		}
+		copyCubeList();
 	}
 	
 	public void rotateUpY(int dir) {
@@ -101,6 +118,7 @@ public class RubiksCube {
 				mCubeList.get(j).rotateCube(yRot);
 			}
 		}
+		copyCubeList();
 	}
 
 	public void rotateMiddleY(int dir) {
@@ -110,6 +128,7 @@ public class RubiksCube {
 				mCubeList.get(j).rotateCube(yRot);
 			}
 		}
+		copyCubeList();
 	}
 	
 	public void rotateDownY(int dir) {
@@ -119,6 +138,7 @@ public class RubiksCube {
 				mCubeList.get(j).rotateCube(yRot);
 			}
 		}
+		copyCubeList();
 	}
 	
 	public void rotateFrontZ(int dir) {
@@ -128,6 +148,7 @@ public class RubiksCube {
 				mCubeList.get(j).rotateCube(zRot);
 			}
 		}
+		copyCubeList();
 	}
 
 	public void rotateMiddleZ(int dir) {
@@ -137,6 +158,7 @@ public class RubiksCube {
 				mCubeList.get(j).rotateCube(zRot);
 			}
 		}
+		copyCubeList();
 	}
 	
 	public void rotateBackZ(int dir) {
@@ -146,10 +168,8 @@ public class RubiksCube {
 				mCubeList.get(j).rotateCube(zRot);
 			}
 		}
+		copyCubeList();
 	}
-	
-	
-	
 	
 	
 	/*******************************************************************************/
@@ -158,7 +178,7 @@ public class RubiksCube {
 	 * daa alle gleiche zählvariable benutzen
 	 */
 //	public void rotatePosX() {
-//		copyCubeList();
+//		//copyCubeList();
 //		//Collections.sort(mCubeCopyList);
 //		RotMatrix xm = new RotMatrix();
 //		
@@ -168,6 +188,7 @@ public class RubiksCube {
 //		{
 //			xm = RotMatrix.xRotMatrix(phi);
 //			for(int j = 0; j < mCubeList.size(); j++) {
+//				mCubeCopyList.get(j).rotateCube(xm);
 //				mCubeList.get(j).rotateCube(xm);
 //			}
 //		}
