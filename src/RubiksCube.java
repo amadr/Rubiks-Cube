@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -8,6 +9,11 @@ public class RubiksCube {
 		
 	private Boolean mRotation = false;
 	int mRotationCounter = 0;
+	
+	private double mXphi = 0;
+	private double mYphi = 0;
+	private double mZphi = 0;
+
 	
 	private Boolean rotated = false;
   
@@ -33,11 +39,18 @@ public class RubiksCube {
 	}
 	
 	public void copyCubeList() {
-		Collections.sort(mCubeList);
+		//Collections.sort(mCubeList);
+		// copy coordinates to third list, no color
 		for (int i = 0; i < mCubeList.size(); i++) {
 			mCubeCopyList.get(i).copyCube(mCubeList.get(i));
 		}
-		rotate_();
+		Collections.sort(mCubeCopyList);
+		// Rotate to old perspective position!
+		for(int i = 0; i < mCubeList.size(); i++) {
+			// IMPORTANT to know which angle was changed at last; or the sequence of the angle
+			mCubeCopyList.get(i).rotateCubeToOldPos(mXphi, mYphi, mZphi);
+		}
+		//rotate_();
 	}
 	
 //	public void startRotation() {
@@ -66,6 +79,11 @@ public class RubiksCube {
 				}
 			}
 		}
+		// Old persepctive rotation or reset to  no perspective rotation
+		mXphi = 0;
+		mYphi = 0;
+		mZphi = 0;
+		copyCubeList();
 	}
 
 //	public void rotateCube() {
@@ -74,22 +92,22 @@ public class RubiksCube {
 //		}
 //	}
 	
-	public void rotate() {
-		for(int i = 0; i < mCubeList.size(); i++) {
-			mCubeCopyList.get(i).rotateCube();
+	public void rotate_(double phi, char axis) {
+		for (int i = 0; i < mCubeList.size(); i++) {
+			mCubeCopyList.get(i).rotateCube_(phi, axis);
 		}
-	}
-	
-	public void rotate_() {
-		for(int i = 0; i < mCubeList.size(); i++) {
-			mCubeCopyList.get(i).rotateCube();
-		}
+		if (axis == 'x')
+			mXphi = (mXphi + phi)%(2*Math.PI);
+		else if (axis == 'y')
+			mYphi = (mYphi + phi)%(2*Math.PI);
+		else if (axis == 'z')
+			mZphi = (mZphi + phi)%(2*Math.PI);
 	}
 	
 	public void rotateLeftX(int dir) {
 		RotMatrix xRot = RotMatrix.xRotMatrix(dir * Math.PI/2);
-		for(int j = 0; j < mCubeList.size(); j++) {
-			if(mCubeList.get(j).getMid().getX() < 0) {
+		for (int j = 0; j < mCubeList.size(); j++) {
+			if (mCubeList.get(j).getMid().getX() < 0) {
 				mCubeList.get(j).rotateCube(xRot);
 			}
 		}

@@ -22,7 +22,7 @@ public class Cube implements Comparable<Cube> {
 	}
 	
 	public Cube (Vector3D toMid) {	
-    this.edgeLength = 135;	
+    this.edgeLength = 90;	
 
 		this.mToMid = toMid; // Vector mit Ausrichtung auf Mittelpunkt (0,0,0)
 		this.mUnitVectors[0] = new Vector3D(1,0,0);	
@@ -32,6 +32,13 @@ public class Cube implements Comparable<Cube> {
 		this.mUnitVectors[4] = new Vector3D(0,-1,0);
 		this.mUnitVectors[5] = new Vector3D(0,0,-1);
 		
+		this.setEdges(mToMid);
+		
+		// ############### Areas erstellen ##########	
+		this.setSquares();
+	}
+	
+	public void setEdges(Vector3D toMid) {
 		/*
 		 * ulf -> upper left front
 		 * urf -> ...
@@ -85,9 +92,6 @@ public class Cube implements Comparable<Cube> {
 		lrb.copyVector(lrf);
 		lrb.addVector( this.mUnitVectors[2].getScaledVector(this.edgeLength));
 		this.mEdges[1][1][1] = lrb;
-		
-		// ############### Areas erstellen ##########	
-		this.setSquares();
 	}
 	
 public void setSquares() {
@@ -151,13 +155,14 @@ public void setSquares() {
 		//this.edgeLength = other.edgeLength;
 	}
 	
-	public void rotateCube() {
-		RotMatrix xm = new RotMatrix();
-		RotMatrix ym = new RotMatrix();
-		RotMatrix zm = new RotMatrix();
-		xm = RotMatrix.xRotMatrix(Math.PI/30);
-		ym = RotMatrix.yRotMatrix(Math.PI/30);
-		zm = RotMatrix.zRotMatrix(Math.PI/30);
+	public void rotateCube_(double phi, char axis) {
+		RotMatrix rm = new RotMatrix();
+		if (axis == 'x')
+			rm = RotMatrix.xRotMatrix(phi);
+		else if(axis == 'y')
+			rm = RotMatrix.yRotMatrix(phi);
+		else if(axis == 'z')
+			rm = RotMatrix.zRotMatrix(phi);
 		
 		for(int i = 0; i < 2; i++) {
 			for(int j = 0; j < 2; j++) {
@@ -166,8 +171,7 @@ public void setSquares() {
 						//System.out.println(" DAVOR: x: " + mEdges[0][0][0].getX() + ", y: " + mEdges[0][0][0].getY() + ",z: " + mEdges[0][0][0].getZ());
 					}
 //					mEdges[i][j][k].rotateVector(xm);								
-					mEdges[i][j][k].rotatePerspective(ym);
-					mEdges[i][j][k].rotatePerspective(zm);
+					mEdges[i][j][k].rotatePerspective(rm);
 					
 					if(k == 0 && j == 0 && i == 0) {
 						//System.out.println("DANACH: x: " + mEdges[0][0][0].getX() + ", y: " + mEdges[0][0][0].getY() + ",z: " + mEdges[0][0][0].getZ());
@@ -178,9 +182,21 @@ public void setSquares() {
 	
 		for (int i = 0; i < mUnitVectors.length; i++) {
 //			mUnitVectors[i].rotateVector(xm);
-			mUnitVectors[i].rotatePerspective(ym);
-			mUnitVectors[i].rotatePerspective(zm);
+			mUnitVectors[i].rotatePerspective(rm);
 		}
+	}
+	
+	public void rotateCubeToOldPos(double phiX, double phiY, double phiZ) {
+		//which one first ?
+		if (phiX != 0) {
+			rotateCube_(phiX, 'x');
+			System.out.println("phiY != 0");
+		}
+		if (phiY != 0)
+			rotateCube_(phiY, 'y');
+		
+		if (phiZ != 0)
+			rotateCube_(phiZ, 'z');
 	}
 	
 	@Override

@@ -55,11 +55,12 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
         
         mPerspective.paintRubiksCube(g2, mRubiksCube);
 
-    	if(rotate_) {
-        	mRubiksCube.rotate_();
-        	
-            rotate_ = false;
-        }
+//    	if(rotate_) {
+//        	mRubiksCube.rotate_(Math.PI/30, 'y');
+//        	mRubiksCube.rotate_(Math.PI/30, 'z');
+//        	
+//            rotate_ = false;
+//        }
 //    	
 //        if(rotate) {
 //        	mRubiksCube.startRotation();
@@ -76,7 +77,7 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
 			repaint();
 
 			try {
-				Thread.sleep(100);
+				Thread.sleep(10);
 			} catch (InterruptedException e) {
 			}
 		}
@@ -86,6 +87,7 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 	    
 	    char key_char = e.getKeyChar();
+	    int key = e.getKeyCode();
 
 	    //x, y, z for rotation of complete RubiksCube
 	    // left + ... key implentieren??
@@ -149,6 +151,24 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
 	    
 	    if (key_char == '0') {
 	        mRubiksCube.reset();
+	    }
+	    
+	    // y-axis
+	    if (key == KeyEvent.VK_LEFT) {
+	    	mRubiksCube.rotate_(Math.PI/30, 'y');
+	    }
+	    // y-axis
+	    if (key == KeyEvent.VK_RIGHT) {
+	    	mRubiksCube.rotate_(-Math.PI/30, 'y');
+	    }
+	    
+	    // z-axis
+	    if (key == KeyEvent.VK_UP) {
+	    	mRubiksCube.rotate_(-Math.PI/30, 'z');
+	    }
+	    // z-axis
+	    if (key == KeyEvent.VK_DOWN) {
+	    	mRubiksCube.rotate_(Math.PI/30, 'z');
 	    }
 	}
 
