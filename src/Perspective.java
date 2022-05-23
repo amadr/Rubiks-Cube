@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Path2D;
 
 /**
  * The calculation from 3D to 2D is done here. Also the paint methods for a
@@ -35,24 +36,29 @@ public class Perspective {
 	}
 	
 	public void paintSquare(Graphics2D g2, Square sq) {
-		int[] x = new int[4];
-		int[] y = new int[4];
+		//int[] x = new int[4];
+		//int[] y = new int[4];
+		
+		Path2D path = new Path2D.Double();
+		path.moveTo(sq.getEdges()[0].getX() + mXoffset, sq.getEdges()[0].getY() + mYoffset);
 		
 		for (int i = 0; i < sq.getEdges().length; i++) {
-			x[i] = (int) sq.getEdges()[i].getX() + (int) mXoffset;
-			y[i] = (int) sq.getEdges()[i].getY() + (int) mYoffset;
+			//x[i] = (int) Math.rint(sq.getEdges()[i].getX() + mXoffset);
+			//y[i] = (int) Math.rint(sq.getEdges()[i].getY() + mYoffset);
 			
+			path.lineTo(sq.getEdges()[i].getX() + mXoffset, sq.getEdges()[i].getY() + mYoffset);	
 		}
 
-        Shape myVectorShape = new Polygon(x, y, 4);
+        //Shape myVectorShape = new Polygon(x, y, 4);
+        //g2.fill(myVectorShape);
+        
+        path.closePath();
+        g2.fill(path);
         
         Stroke stroke = new BasicStroke((float) 3.0);
         g2.setStroke(stroke);
-        
-        g2.fill(myVectorShape);
         g2.setColor(Color.BLACK);
-        g2.draw(myVectorShape);
-        
+        g2.draw(path);
 	}
 	
 	public void paintCube(Graphics2D g2, Cube cb) {
@@ -69,7 +75,7 @@ public class Perspective {
 	
 	public void paintRubiksCube(Graphics2D g2, RubiksCube rc) {
 		//rc.sort();
-		rc.copyCubeList();
+		//rc.copyCubeList();
 		for (int i = 0; i < rc.getCubeList().size(); i++) {
 			paintCube(g2, rc.getCubeCopyList().get(i));	
 		}
