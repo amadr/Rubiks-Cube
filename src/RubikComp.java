@@ -4,8 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.geom.AffineTransform;
-
 import javax.swing.JComponent;
 
 /**
@@ -19,14 +17,14 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
 	
     private Boolean rotate = true;
     private Boolean rotate_ = true;
-
-	
+    
 	public RubikComp() {		
 		//mCube = new Cube(new Vector3D(0, 0, 100));
 		
 		mRubiksCube = new RubiksCube();
-				
 		mPerspective = new Perspective();
+		
+		
     	setPreferredSize (new Dimension (1000, 800));
     	addKeyListener(this);
     	Thread th = new Thread (this);
@@ -54,6 +52,8 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
         //g2.setTransform(at);
         
         mPerspective.paintRubiksCube(g2, mRubiksCube);
+        
+        //mPerspective.paintAxis(g2, mRubiksCube.getAxis());
 
 //    	if(rotate_) {
 //        	mRubiksCube.rotate_(Math.PI/30, 'y');
@@ -86,89 +86,97 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 	    
-	    char key_char = e.getKeyChar();
 	    int key = e.getKeyCode();
 
 	    //x, y, z for rotation of complete RubiksCube
 	    // left + ... key implentieren??
-	    if (key_char == 'l') {
+	    if (key == 'l') {
 	        mRubiksCube.rotateLeftX(1);
 	    }
-	    if (key_char == 'L') {
+	    if (key == 'L') {
 	        mRubiksCube.rotateLeftX(-1);
 	    }
-	    if (key_char == 'x') {
+	    if (key == 'x') {
 	        mRubiksCube.rotateMiddleX(1);
 	    }
-	    if (key_char == 'X') {
+	    if (key == 'X') {
 	        mRubiksCube.rotateMiddleX(-1);
 	    }
-	    if (key_char == 'r') {
+	    if (key == 'r') {
 	        mRubiksCube.rotateRightX(1);
 	    }
-	    if (key_char == 'R') {
+	    if (key == 'R') {
 	        mRubiksCube.rotateRightX(-1);
 	    }
 
 
-	    if (key_char == 'u') {
+	    if (key == 'u') {
 	        mRubiksCube.rotateUpY(1);
 	    }
-	    if (key_char == 'U') {
+	    if (key == 'U') {
 	        mRubiksCube.rotateUpY(-1);
 	    }
-	    if (key_char == 'y') {
+	    if (key == 'y') {
 	        mRubiksCube.rotateMiddleY(1);
 	    }
-	    if (key_char == 'Y') {
+	    if (key == 'Y') {
 	        mRubiksCube.rotateMiddleY(-1);
 	    }
-	    if (key_char == 'd') {
+	    if (key == 'd') {
 	        mRubiksCube.rotateDownY(1);
 	    }
-	    if (key_char == 'D') {
+	    if (key == 'D') {
 	        mRubiksCube.rotateDownY(-1);
 	    }
 	    
-	    if (key_char == 'f') {
+	    if (key == 'f') {
 	        mRubiksCube.rotateFrontZ(1);
 	    }
-	    if (key_char == 'F') {
+	    if (key == 'F') {
 	        mRubiksCube.rotateFrontZ(-1);
 	    }
-	    if (key_char == 'z') {
+	    if (key == 'z') {
 	        mRubiksCube.rotateMiddleZ(1);
 	    }
-	    if (key_char == 'Z') {
+	    if (key == 'Z') {
 	        mRubiksCube.rotateMiddleZ(-1);
 	    }
-	    if (key_char == 'b') {
+	    if (key == 'b') {
 	        mRubiksCube.rotateBackZ(1);
 	    }
-	    if (key_char == 'B') {
+	    if (key == 'B') {
 	        mRubiksCube.rotateBackZ(-1);
 	    }
 	    
-	    if (key_char == '0') {
+	    if (key == '0') {
 	        mRubiksCube.reset();
 	    }
 	    
-	    // y-axis
+	    // x-axis pos
+	    if (key == KeyEvent.VK_UP) {
+	    	mRubiksCube.rotate_(Math.PI/30, 'x');
+	    }
+	    // x-axis neg
+	    if (key == KeyEvent.VK_DOWN) {
+	    	mRubiksCube.rotate_(-Math.PI/30, 'x');
+	    }
+	    
+	    // y-axis pos
 	    if (key == KeyEvent.VK_LEFT) {
 	    	mRubiksCube.rotate_(Math.PI/30, 'y');
 	    }
-	    // y-axis
+	    // y-axis neg
 	    if (key == KeyEvent.VK_RIGHT) {
 	    	mRubiksCube.rotate_(-Math.PI/30, 'y');
 	    }
 	    
-	    // z-axis
-	    if (key == KeyEvent.VK_UP) {
-	    	mRubiksCube.rotate_(-Math.PI/30, 'z');
-	    }
-	    // z-axis
-	    if (key == KeyEvent.VK_DOWN) {
+	    // z-axis pos
+	    if (key == 'p') {
 	    	mRubiksCube.rotate_(Math.PI/30, 'z');
+	    }
+	    // z-axis neg
+	    if (key == 'P') {
+	    	mRubiksCube.rotate_(-Math.PI/30, 'z');
 	    }
 	}
 

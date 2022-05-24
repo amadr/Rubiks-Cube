@@ -35,6 +35,18 @@ public class Perspective {
 		mScale = s;
 	}
 	
+	public void paintAxis(Graphics2D g2, Vector3D[] axis) {
+		Path2D axisPath = new Path2D.Double();
+		g2.setColor(Color.BLACK);
+		axisPath.moveTo(axis[0].getX() + mXoffset, axis[0].getY());
+		for (int i = 1; i < axis.length; i++) 
+		{
+			axisPath.lineTo(axis[i].getX() + mXoffset, axis[i].getY());
+		}
+		//axisPath.closePath();
+        g2.draw(axisPath);
+	}
+	
 	public void paintSquare(Graphics2D g2, Square sq) {
 		//int[] x = new int[4];
 		//int[] y = new int[4];
@@ -42,7 +54,7 @@ public class Perspective {
 		Path2D path = new Path2D.Double();
 		path.moveTo(sq.getEdges()[0].getX() + mXoffset, sq.getEdges()[0].getY() + mYoffset);
 		
-		for (int i = 0; i < sq.getEdges().length; i++) {
+		for (int i = 1; i < sq.getEdges().length; i++) {
 			//x[i] = (int) Math.rint(sq.getEdges()[i].getX() + mXoffset);
 			//y[i] = (int) Math.rint(sq.getEdges()[i].getY() + mYoffset);
 			
@@ -59,6 +71,11 @@ public class Perspective {
         g2.setStroke(stroke);
         g2.setColor(Color.BLACK);
         g2.draw(path);
+        		
+        //AXIS
+//        g2.drawLine(450+(int)mXoffset, 20, 450+(int)mXoffset, 100);
+//        g2.drawLine(450+(int)mXoffset, 100, 393+(int)mXoffset, 156);
+//        g2.drawLine(450+(int)mXoffset, 100, 530+(int)mXoffset, 100);
 	}
 	
 	public void paintCube(Graphics2D g2, Cube cb) {
@@ -74,7 +91,7 @@ public class Perspective {
 	}
 	
 	public void paintRubiksCube(Graphics2D g2, RubiksCube rc) {
-		//rc.sort();
+		rc.sort();
 		//rc.copyCubeList();
 		for (int i = 0; i < rc.getCubeList().size(); i++) {
 			paintCube(g2, rc.getCubeCopyList().get(i));	

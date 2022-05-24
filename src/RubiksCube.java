@@ -13,7 +13,8 @@ public class RubiksCube {
 	private double mXphi = 0;
 	private double mYphi = 0;
 	private double mZphi = 0;
-
+	
+    private Vector3D[] mAxis = new Vector3D[6];
 	
 	private Boolean rotated = false;
   
@@ -28,6 +29,13 @@ public class RubiksCube {
 				}
 			}
 		}
+
+		mAxis[0] = new Vector3D(450, 20, 0);
+		mAxis[1] = new Vector3D(450, 100, 0);
+		mAxis[2] = new Vector3D(393.4314, 156.5685, 0);
+		mAxis[3] = new Vector3D(450, 100, 0);
+		mAxis[4] = new Vector3D(450, 100, 0);
+		mAxis[5] = new Vector3D(530, 100, 0);
 	}
 	
 	public ArrayList<Cube> getCubeList() {
@@ -38,18 +46,28 @@ public class RubiksCube {
 		return mCubeCopyList;
 	}
 	
+	public Vector3D[] getAxis() {
+		return mAxis;
+	}
+	
+	private void rotateAxis(RotMatrix rm) {
+		//TODO
+		mAxis[0].rotatePerspective(rm);
+	}
+	
 	public void copyCubeList() {
 		//Collections.sort(mCubeList);
 		// copy coordinates to third list, no color
 		for (int i = 0; i < mCubeList.size(); i++) {
 			mCubeCopyList.get(i).copyCube(mCubeList.get(i));
 		}
-		Collections.sort(mCubeCopyList);
+		//Collections.sort(mCubeCopyList);
 		// Rotate to old perspective position!
 		for(int i = 0; i < mCubeList.size(); i++) {
 			// IMPORTANT to know which angle was changed at last; or the sequence of the angle
 			mCubeCopyList.get(i).rotateCubeToOldPos(mXphi, mYphi, mZphi);
 		}
+		//Collections.sort(mCubeCopyList);
 		//rotate_();
 	}
 	
@@ -60,13 +78,13 @@ public class RubiksCube {
 //	}
 	
 	public void sort() {
-		for(int i = 0; i < mCubeList.size(); i++) {
-			System.out.println(i + " : " + mCubeList.get(i).getMid().getZ());
-		}
+//		for(int i = 0; i < mCubeList.size(); i++) {
+//			System.out.println(i + " : " + mCubeList.get(i).getMid().getZ());
+//		}
 		Collections.sort(mCubeList);
-		for(int i = 0; i < mCubeList.size(); i++) {
-			System.out.println(i + " : " + mCubeList.get(i).getMid().getZ());
-		}
+//		for(int i = 0; i < mCubeList.size(); i++) {
+//			System.out.println(i + " : " + mCubeList.get(i).getMid().getZ());
+//		}
 	}
 	
 	public void reset() {
@@ -93,15 +111,16 @@ public class RubiksCube {
 //	}
 	
 	public void rotate_(double phi, char axis) {
-		for (int i = 0; i < mCubeList.size(); i++) {
-			mCubeCopyList.get(i).rotateCube_(phi, axis);
-		}
 		if (axis == 'x')
 			mXphi = (mXphi + phi)%(2*Math.PI);
 		else if (axis == 'y')
 			mYphi = (mYphi + phi)%(2*Math.PI);
 		else if (axis == 'z')
 			mZphi = (mZphi + phi)%(2*Math.PI);
+		for (int i = 0; i < mCubeList.size(); i++) {
+			mCubeCopyList.get(i).rotateCube_(phi, axis);
+		}
+		Collections.sort(mCubeCopyList);
 	}
 	
 	public void rotateLeftX(int dir) {
