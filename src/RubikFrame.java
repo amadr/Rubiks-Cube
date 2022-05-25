@@ -5,7 +5,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
 /**
- * 
+ * TODO
+ * class description
  */
 
 public class RubikFrame extends JFrame {
@@ -26,6 +27,7 @@ public class RubikFrame extends JFrame {
 //
 //		f.add(input);
 		f.add(rComp);
+		f.add(rComp.mScrambleButton);
 		f.addKeyListener(rComp);
 
 		new Thread(rComp).start();

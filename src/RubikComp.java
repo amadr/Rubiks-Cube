@@ -1,16 +1,24 @@
+import java.awt.AWTException;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Robot;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.concurrent.Callable;
+
+import javax.swing.JButton;
 import javax.swing.JComponent;
 
 /**
- * 
+ * TODO
+ * class description
  */
 
-public class RubikComp extends JComponent implements Runnable, KeyListener {
+public class RubikComp extends JComponent implements Runnable, KeyListener, ActionListener {
 	private RubiksCube mRubiksCube;
 	//private Cube mCube;
 	private Perspective mPerspective;
@@ -18,13 +26,16 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
     private Boolean rotate = true;
     private Boolean rotate_ = true;
     
+	JButton mScrambleButton = new JButton("Scramble");
+    
 	public RubikComp() {		
 		//mCube = new Cube(new Vector3D(0, 0, 100));
 		
 		mRubiksCube = new RubiksCube();
 		mPerspective = new Perspective();
 		
-		
+		mScrambleButton.addActionListener(this);
+
     	setPreferredSize (new Dimension (1000, 800));
     	addKeyListener(this);
     	Thread th = new Thread (this);
@@ -53,7 +64,6 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
         
         mPerspective.paintRubiksCube(g2, mRubiksCube);
         
-        //mPerspective.paintAxis(g2, mRubiksCube.getAxis());
 
 //    	if(rotate_) {
 //        	mRubiksCube.rotate_(Math.PI/30, 'y');
@@ -88,8 +98,6 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
 	    
 	    int key = e.getKeyCode();
 
-	    //x, y, z for rotation of complete RubiksCube
-	    // left + ... key implentieren??
 	    if (key == 'l') {
 	        mRubiksCube.rotateLeftX(1);
 	    }
@@ -154,40 +162,66 @@ public class RubikComp extends JComponent implements Runnable, KeyListener {
 	    
 	    // x-axis pos
 	    if (key == KeyEvent.VK_UP) {
-	    	mRubiksCube.rotate_(Math.PI/30, 'x');
+	    	mRubiksCube.rotatePerspective(Math.PI/50, 'x');
 	    }
 	    // x-axis neg
 	    if (key == KeyEvent.VK_DOWN) {
-	    	mRubiksCube.rotate_(-Math.PI/30, 'x');
+	    	mRubiksCube.rotatePerspective(-Math.PI/50, 'x');
 	    }
 	    
 	    // y-axis pos
 	    if (key == KeyEvent.VK_LEFT) {
-	    	mRubiksCube.rotate_(Math.PI/30, 'y');
+	    	mRubiksCube.rotatePerspective(Math.PI/50, 'y');
 	    }
 	    // y-axis neg
 	    if (key == KeyEvent.VK_RIGHT) {
-	    	mRubiksCube.rotate_(-Math.PI/30, 'y');
+	    	mRubiksCube.rotatePerspective(-Math.PI/50, 'y');
 	    }
 	    
 	    // z-axis pos
 	    if (key == 'p') {
-	    	mRubiksCube.rotate_(Math.PI/30, 'z');
+	    	mRubiksCube.rotatePerspective(Math.PI/50, 'z');
 	    }
 	    // z-axis neg
 	    if (key == 'P') {
-	    	mRubiksCube.rotate_(-Math.PI/30, 'z');
+	    	mRubiksCube.rotatePerspective(-Math.PI/50, 'z');
 	    }
+	}
+
+	private void rotate(Object rotateLeftX) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Object obi = e.getSource();
+		if(obi == mScrambleButton)
+		{
+			scramble();
+		}
+	}
+	
+	private void scramble() {
+		Robot robot;
+		try {
+			robot = new Robot();
+			// TODO: Simulate keypress or rotation
+	        robot.keyPress('l');
+	        System.out.println("SCRAMBLE PRESSED");
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

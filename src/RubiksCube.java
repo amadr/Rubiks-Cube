@@ -1,6 +1,10 @@
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collections;
+
+/**
+ * TODO
+ * class description
+ */
 
 public class RubiksCube {
 
@@ -9,10 +13,10 @@ public class RubiksCube {
 		
 	private Boolean mRotation = false;
 	int mRotationCounter = 0;
-	
-	private double mXphi = 0;
-	private double mYphi = 0;
-	private double mZphi = 0;
+
+	// A list of all perspective rotation matrices is needed because just multiplying 
+	// one rotation matrix again and again leads to ever more accelerated rotation
+	private ArrayList<RotMatrix> mRotMatrices = new ArrayList<RotMatrix>();
 	
     private Vector3D[] mAxis = new Vector3D[6];
 	
@@ -30,6 +34,12 @@ public class RubiksCube {
 			}
 		}
 
+		setAxisArray();
+		
+		mRotMatrices.add(new RotMatrix());
+	}
+	
+	public void setAxisArray() {
 		mAxis[0] = new Vector3D(450, 20, 0);
 		mAxis[1] = new Vector3D(450, 100, 0);
 		mAxis[2] = new Vector3D(393.4314, 156.5685, 0);
@@ -52,39 +62,26 @@ public class RubiksCube {
 	
 	private void rotateAxis(RotMatrix rm) {
 		//TODO
-		mAxis[0].rotatePerspective(rm);
+		mAxis[0].rotateVector(rm);
 	}
 	
 	public void copyCubeList() {
-		//Collections.sort(mCubeList);
-		// copy coordinates to third list, no color
 		for (int i = 0; i < mCubeList.size(); i++) {
 			mCubeCopyList.get(i).copyCube(mCubeList.get(i));
 		}
-		//Collections.sort(mCubeCopyList);
-		// Rotate to old perspective position!
+
+		// Rotate to old perspective position
 		for(int i = 0; i < mCubeList.size(); i++) {
-			// IMPORTANT to know which angle was changed at last; or the sequence of the angle
-			mCubeCopyList.get(i).rotateCubeToOldPos(mXphi, mYphi, mZphi);
+			for (int j = 0; j < mRotMatrices.size(); j++) {
+				mCubeCopyList.get(i).rotateCube(mRotMatrices.get(j));
+			}
 		}
 		//Collections.sort(mCubeCopyList);
-		//rotate_();
 	}
 	
-//	public void startRotation() {
-//		mRotation = true;
-//		//copyCubeList();
-//		Collections.sort(mCubeCopyList);
-//	}
 	
 	public void sort() {
-//		for(int i = 0; i < mCubeList.size(); i++) {
-//			System.out.println(i + " : " + mCubeList.get(i).getMid().getZ());
-//		}
-		Collections.sort(mCubeList);
-//		for(int i = 0; i < mCubeList.size(); i++) {
-//			System.out.println(i + " : " + mCubeList.get(i).getMid().getZ());
-//		}
+		Collections.sort(mCubeCopyList);
 	}
 	
 	public void reset() {
@@ -97,30 +94,32 @@ public class RubiksCube {
 				}
 			}
 		}
-		// Old persepctive rotation or reset to  no perspective rotation
-		mXphi = 0;
-		mYphi = 0;
-		mZphi = 0;
+		// Reset to  no perspective rotation
+		mRotMatrices.removeAll(mRotMatrices);
+		mRotMatrices.add(new RotMatrix());
 		copyCubeList();
+		
+		// Set Axis to old position
+		setAxisArray();
 	}
-
-//	public void rotateCube() {
-//		for(int i = 0; i < mCubeList.size(); i++) {
-//			mCubeList.get(i).rotateCube();
-//		}
-//	}
 	
-	public void rotate_(double phi, char axis) {
-		if (axis == 'x')
-			mXphi = (mXphi + phi)%(2*Math.PI);
-		else if (axis == 'y')
-			mYphi = (mYphi + phi)%(2*Math.PI);
-		else if (axis == 'z')
-			mZphi = (mZphi + phi)%(2*Math.PI);
-		for (int i = 0; i < mCubeList.size(); i++) {
-			mCubeCopyList.get(i).rotateCube_(phi, axis);
+	public void rotatePerspective(double phi, char axis) {
+		if (axis == 'x') {
+			mRotMatrices.add(RotMatrix.xRotMatrix(phi));
+		} else if (axis == 'y') {
+			mRotMatrices.add(RotMatrix.yRotMatrix(phi));
+		} else if (axis == 'z') {
+			mRotMatrices.add(RotMatrix.zRotMatrix(phi));
 		}
-		Collections.sort(mCubeCopyList);
+		// Only rotate with the newest RotMatrix in list
+		for (int i = 0; i < mCubeList.size(); i++) {
+			mCubeCopyList.get(i).rotateCube(mRotMatrices.get(mRotMatrices.size()-1));
+		}
+		// TODO: Rotation point should be 0 point (Nullpunkt)
+		for (int i = 0; i < mAxis.length; i++) {
+			mAxis[i].rotateVector(mRotMatrices.get(mRotMatrices.size() - 1));
+		}
+		//Collections.sort(mCubeCopyList);
 	}
 	
 	public void rotateLeftX(int dir) {
