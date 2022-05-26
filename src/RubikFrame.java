@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -5,7 +6,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
 /**
- * 
+ * TODO
+ * class description
  */
 
 public class RubikFrame extends JFrame {
@@ -26,7 +28,11 @@ public class RubikFrame extends JFrame {
 //
 //		f.add(input);
 		f.add(rComp);
+		f.add(rComp.mScrambleButton);
+		f.add(rComp.mPseudoSolveButton);
 		f.addKeyListener(rComp);
+		
+		f.getContentPane().setBackground(Color.GRAY);
 
 		new Thread(rComp).start();
 		f.pack();

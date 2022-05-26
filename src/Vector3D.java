@@ -1,11 +1,10 @@
 /**
- * 
+ * TODO
+ * class description
  */
 
 public class Vector3D {
-	/*
-	 * Member vector containing the x, y and z coordinates.
-	 */
+
 	private double[] mVector = new double[3];
 
 	public Vector3D() {
@@ -96,23 +95,9 @@ public class Vector3D {
 		
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
-				result[i] += rint((mVector[j] * rotMatrix.mRotMatrix[i][j]));
-				//result[i] += (int) (mVector[j] * rotMatrix.mRotMatrix[i][j]);
-			}
-		}
-		mVector[0] = result[0];
-		mVector[1] = result[1];
-		mVector[2] = result[2];
-	}
-	//delete it and use above one
-	public void rotatePerspective(RotMatrix rotMatrix) {
-		int row = rotMatrix.mRotMatrix.length, col = rotMatrix.mRotMatrix[0].length;
-		double[] result = {0, 0, 0};
-		
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
-				result[i] += rint((mVector[j] * rotMatrix.mRotMatrix[i][j]));
-				//result[i] += (int) (mVector[j] * rotMatrix.mRotMatrix[i][j]);
+				// rint is important because, too many decimal points cause normal vector z
+				// component to be false
+				result[i] += rint(mVector[j] * rotMatrix.mRotMatrix[i][j]);
 			}
 		}
 		mVector[0] = result[0];
@@ -120,8 +105,7 @@ public class Vector3D {
 		mVector[2] = result[2];
 	}
 	
-	private double rint(double value) 
-	{
+	private double rint(double value) {
 		final int decimalPoints = 4;
 		double d = Math.pow(10, decimalPoints);
 		return Math.rint(value * d) / d;

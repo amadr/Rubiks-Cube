@@ -1,19 +1,14 @@
 /**
- * 
+ * TODO
+ * class description
  */
 
-/**
- * @author amad
- *
- */
 public class RotMatrix {
-	/*
-	 * Member rotation matrix.
-	 */
+
 	public double[][] mRotMatrix = new double[3][3];
 
 	public RotMatrix() {
-		int rows = mRotMatrix.length - 1, cloumns = mRotMatrix[0].length - 1;
+		int rows = mRotMatrix.length, cloumns = mRotMatrix[0].length;
 		
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cloumns; j++) {
@@ -53,9 +48,14 @@ public class RotMatrix {
 		double[][] result = new double[mRotMatrix.length][other.mRotMatrix[0].length];
 
 		for (int row = 0; row < result.length; row++) {
-			//for (int col = 0; col < result[row].length; col++) {
 			for (int col = 0; col < result[0].length; col++) {
 				result[row][col] = multiplyMatricesCell(other.mRotMatrix, row, col);
+			}
+		}
+
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				System.out.println("i, j: " + i + ":" + j + ":: " + result[i][j]);
 			}
 		}
 

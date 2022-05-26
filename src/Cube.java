@@ -1,6 +1,7 @@
 import java.awt.Color;
 
 /**
+ * TODO
  * class description
  */
 
@@ -22,7 +23,7 @@ public class Cube implements Comparable<Cube> {
 	}
 	
 	public Cube (Vector3D toMid) {	
-    this.edgeLength = 90;	
+    this.edgeLength = 150;	
 
 		this.mToMid = toMid; // Vector mit Ausrichtung auf Mittelpunkt (0,0,0)
 		this.mUnitVectors[0] = new Vector3D(1,0,0);	
@@ -171,7 +172,7 @@ public void setSquares() {
 						//System.out.println(" DAVOR: x: " + mEdges[0][0][0].getX() + ", y: " + mEdges[0][0][0].getY() + ",z: " + mEdges[0][0][0].getZ());
 					}
 //					mEdges[i][j][k].rotateVector(xm);								
-					mEdges[i][j][k].rotatePerspective(rm);
+					mEdges[i][j][k].rotateVector(rm);
 					
 					if(k == 0 && j == 0 && i == 0) {
 						//System.out.println("DANACH: x: " + mEdges[0][0][0].getX() + ", y: " + mEdges[0][0][0].getY() + ",z: " + mEdges[0][0][0].getZ());
@@ -179,10 +180,12 @@ public void setSquares() {
 				}
 			}
 		}
+		
+		this.mToMid.rotateVector(rm);
 	
 		for (int i = 0; i < mUnitVectors.length; i++) {
 //			mUnitVectors[i].rotateVector(xm);
-			mUnitVectors[i].rotatePerspective(rm);
+			mUnitVectors[i].rotateVector(rm);
 		}
 	}
 	
@@ -217,8 +220,6 @@ public void setSquares() {
 			for(int j = 0; j < 2; j++) {
 				for(int k = 0; k < 2; k++) {
 					mEdges[i][j][k].rotateVector(rm);
-					//System.out.println(" DAVOR: x: " + this.mToMid.getX() + ", y: " + this.mToMid.getY() + ",z: " + this.mToMid.getZ());
-					//System.out.println("DANACH: x: " + this.mToMid.getX() + ", y: " + this.mToMid.getY() + ",z: " + this.mToMid.getZ());
 				}
 			}
 		}
@@ -228,5 +229,6 @@ public void setSquares() {
 			mUnitVectors[i].rotateVector(rm);
 		}
 	}
+	
 }
 
