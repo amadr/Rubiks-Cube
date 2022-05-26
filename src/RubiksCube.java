@@ -40,12 +40,13 @@ public class RubiksCube {
 	}
 	
 	public void setAxisArray() {
-		mAxis[0] = new Vector3D(450, 20, 0);
-		mAxis[1] = new Vector3D(450, 100, 0);
-		mAxis[2] = new Vector3D(393.4314, 156.5685, 0);
-		mAxis[3] = new Vector3D(450, 100, 0);
-		mAxis[4] = new Vector3D(450, 100, 0);
-		mAxis[5] = new Vector3D(530, 100, 0);
+		mAxis[0] = new Vector3D(0, 70, 0);
+		mAxis[1] = new Vector3D(0, 150, 0);
+		//mAxis[2] = new Vector3D(393.4314, 156.5685, 0);
+		mAxis[2] = new Vector3D(-56.5686, 206.5685, 0);
+		mAxis[3] = new Vector3D(0, 150, 0);
+		mAxis[4] = new Vector3D(0, 150, 0);
+		mAxis[5] = new Vector3D(80, 150, 0);
 	}
 	
 	public ArrayList<Cube> getCubeList() {
@@ -116,10 +117,73 @@ public class RubiksCube {
 			mCubeCopyList.get(i).rotateCube(mRotMatrices.get(mRotMatrices.size()-1));
 		}
 		// TODO: Rotation point should be 0 point (Nullpunkt)
-		for (int i = 0; i < mAxis.length; i++) {
-			mAxis[i].rotateVector(mRotMatrices.get(mRotMatrices.size() - 1));
-		}
+//		for (int i = 0; i < mAxis.length; i++) {
+//			mAxis[i].rotateVector(mRotMatrices.get(mRotMatrices.size() - 1));
+//		}
+		mAxis[0].rotateVector(mRotMatrices.get(mRotMatrices.size() - 1));
+		mAxis[2].rotateVector(mRotMatrices.get(mRotMatrices.size() - 1));
+		mAxis[5].rotateVector(mRotMatrices.get(mRotMatrices.size() - 1));
 		//Collections.sort(mCubeCopyList);
+	}
+	
+	public void rotatePlane(char p) {
+		System.out.println("rotatePlane " + p);
+		if (p == 'l') {
+	        rotateLeftX(1);
+	    }
+	    if (p == 'L') {
+	        rotateLeftX(-1);
+	    }
+	    if (p == 'm') {
+	        rotateMiddleX(1);
+	    }
+	    if (p == 'M') {
+	        rotateMiddleX(-1);
+	    }
+	    if (p == 'r') {
+	        rotateRightX(1);
+	    }
+	    if (p == 'R') {
+	        rotateRightX(-1);
+	    }
+	    
+	    if (p == 'u') {
+	        rotateUpY(1);
+	    }
+	    if (p == 'U') {
+	        rotateUpY(-1);
+	    }
+	    if (p == 'e') {
+	        rotateMiddleY(1);
+	    }
+	    if (p == 'E') {
+	        rotateMiddleY(-1);
+	    }
+	    if (p == 'd') {
+	        rotateDownY(1);
+	    }
+	    if (p == 'D') {
+	        rotateDownY(-1);
+	    }
+	    
+	    if (p == 'f') {
+	        rotateFrontZ(1);
+	    }
+	    if (p == 'F') {
+	        rotateFrontZ(-1);
+	    }
+	    if (p == 's') {
+	        rotateMiddleZ(1);
+	    }
+	    if (p == 'S') {
+	        rotateMiddleZ(-1);
+	    }
+	    if (p == 'b') {
+	        rotateBackZ(1);
+	    }
+	    if (p == 'B') {
+	        rotateBackZ(-1);
+	    }
 	}
 	
 	public void rotateLeftX(int dir) {
