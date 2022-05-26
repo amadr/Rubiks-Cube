@@ -39,17 +39,17 @@ public class Perspective {
 	public void paintAxis(Graphics2D g2, Vector3D[] axis) {
 		Path2D axisPath = new Path2D.Double();
 		g2.setColor(Color.BLACK);
-		axisPath.moveTo(axis[0].getX() + mXoffset + 450, axis[0].getY());
+		axisPath.moveTo(axis[0].getX() + mXoffset + 450, axis[0].getY()+100);
 		for (int i = 1; i < axis.length; i++) 
 		{
-			axisPath.lineTo(axis[i].getX() + mXoffset + 450, axis[i].getY());
+			axisPath.lineTo(axis[i].getX() + mXoffset + 450, axis[i].getY()+100);
 		}
         g2.draw(axisPath);
         
         g2.setFont(new Font("Arial", Font.BOLD, 16)); 
-    	g2.drawString("Y" , (float)(axis[0].getX() + mXoffset)+460, (float)axis[0].getY()+10);
-    	g2.drawString("Z" , (float)(axis[2].getX() + mXoffset)+460, (float)axis[2].getY()+10);
-    	g2.drawString("X" , (float)(axis[5].getX() + mXoffset)+460, (float)axis[5].getY()+10);
+    	g2.drawString("Y" , (float)(axis[0].getX() + mXoffset)+460, (float)axis[0].getY()+100);
+    	g2.drawString("Z" , (float)(axis[2].getX() + mXoffset)+470, (float)axis[2].getY()+100);
+    	g2.drawString("X" , (float)(axis[4].getX() + mXoffset)+460, (float)axis[4].getY()+100);
 	}
 	
 	public void paintSquare(Graphics2D g2, Square sq) {
