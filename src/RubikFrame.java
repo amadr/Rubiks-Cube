@@ -1,37 +1,33 @@
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
- * TODO
- * class description
+ * TODO class description
  */
 
 public class RubikFrame extends JFrame {
-	// private RubiksCube mRubikCube;
-	private RubikComp mRubikComp;
-
 	public static void main(String[] args) {
 		JFrame f = new JFrame("Rubik's Cube");
 		f.setLayout(new FlowLayout());
-		
-		RubikComp rComp = new RubikComp();
 
-//		JPanel input = new JPanel();
-//		input.setLayout(new FlowLayout());
-//
-//		JLabel label = new JLabel("LABEL");
-//		input.add(label);
-//
-//		f.add(input);
+		RubikComp rComp = new RubikComp();
 		f.add(rComp);
-		f.add(rComp.mScrambleButton);
-		f.add(rComp.mPseudoSolveButton);
+
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridLayout(2, 1));
+		buttons.add(rComp.mScrambleButton);
+		buttons.add(rComp.mPseudoSolveButton);
+		buttons.setBackground(Color.GRAY);
+		f.add(buttons);
+
 		f.addKeyListener(rComp);
-		
+
 		f.getContentPane().setBackground(Color.GRAY);
 
 		new Thread(rComp).start();
