@@ -1,7 +1,7 @@
 import java.awt.Color;
 
 /**
- * 
+ * This class contains 4 edges, the normal vector and the color of the plane.
  */
 
 public class Square {
