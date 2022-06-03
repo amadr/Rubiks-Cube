@@ -2,26 +2,21 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.Stroke;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 
 /**
- * The calculation from 3D to 2D is done here. Also the paint methods for a
- * square, the cube and the whole Rubik's cube are declared here.
+ * This class contains the paint methods for a square, the cube and the whole
+ * Rubik's Cube.
  */
 
 public class Perspective {
 
-	private double mXoffset, mYoffset, mScale;
+	private double mXoffset, mYoffset;
 
 	public Perspective() {
 		mXoffset = 400;
 		mYoffset = 400;
-		mScale = 1;
 	}
 
 	public void setXOffset(double x) {
@@ -30,10 +25,6 @@ public class Perspective {
 
 	public void setYOffset(double y) {
 		mYoffset = y;
-	}
-
-	public void setScale(double s) {
-		mScale = s;
 	}
 
 	public void paintAxis(Graphics2D g2, Vector3D[] axis) {

@@ -1,10 +1,12 @@
 import java.awt.Color;
 
 /**
- * TODO class description
+ * This class contains a Cube with 8 edges, 6 areas, the corresponding unit
+ * vectors and a vector to the middle point of the cube.
  */
 
 public class Cube implements Comparable<Cube> {
+	
 	private double edgeLength;
 	private Vector3D mToMid;
 

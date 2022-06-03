@@ -1,5 +1,5 @@
 /**
- * TODO class description
+ * This class contains the 3x3 x, y and z rotation matrices.
  */
 
 public class RotMatrix {

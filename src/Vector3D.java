@@ -1,9 +1,9 @@
 /**
- * TODO class description
+ * This class contains a Vector with x, y, and z coordinates.
  */
 
 public class Vector3D {
-
+	
 	private double[] mVector = new double[3];
 
 	public Vector3D() {

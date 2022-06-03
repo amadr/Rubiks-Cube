@@ -2,16 +2,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * TODO class description
+ * This class contains 27 cube objects for the whole Rubik's Cube.
  */
 
 public class RubiksCube {
-
+	
 	private ArrayList<Cube> mCubeList = new ArrayList<Cube>();
 	private ArrayList<Cube> mCubeCopyList = new ArrayList<Cube>();
 	// A list of all perspective rotation matrices is needed because just
 	// multiplying one rotation matrix again and again leads to ever more
-	// accelerated rotation
+	// accelerated rotation because of round up/ down of the double values
 	private ArrayList<RotMatrix> mRotMatrices = new ArrayList<RotMatrix>();
 
 	private Vector3D[] mAxis = new Vector3D[5];

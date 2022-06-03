@@ -14,10 +14,12 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 
 /**
- * TODO class description
+ * This class generates the Rubik's Cube with 27 cubes, initializes the drawing
+ * and implements the keyboard controls.
  */
 
 public class RubikComp extends JComponent implements Runnable, KeyListener, ActionListener {
+	
 	private RubiksCube mRubiksCube;
 	private Perspective mPerspective;
 
